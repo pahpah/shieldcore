@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShieldCore — Cybersecurity Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --dark: #0f0f0f;
+    --panel: #141414;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7a6330;
+    --red: #C0392B;
+    --red-bright: #E74C3C;
+    --white: #F0EDE8;
+    --grey: #888;
+    --border: rgba(201,168,76,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    opacity: 0.6;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(8,8,8,0.97);
+    border-bottom-color: var(--border);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .logo span { color: var(--red); }
+  nav ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  nav a:hover { opacity: 1; color: var(--gold); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(192,57,43,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  }
+
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s forwards 0.3s;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--red);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s forwards 0.5s;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  h1 .red { color: var(--red); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(240,237,232,0.6);
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s forwards 0.7s;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s forwards 0.9s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .btn-secondary:hover { opacity: 1; }
+  .btn-secondary::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .btn-secondary:hover::after { transform: translateX(4px); }
+
+  /* SHIELD DECO */
+  .shield-deco {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 420px;
+    height: 420px;
+    opacity: 0;
+    animation: fadeIn 1.2s forwards 1s;
+  }
+  .shield-deco svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 40px rgba(192,57,43,0.2));
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes rotateCCW {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  .ring1 { animation: rotate 20s linear infinite; transform-origin: center; }
+  .ring2 { animation: rotateCCW 15s linear infinite; transform-origin: center; }
+  .shield-pulse { animation: shieldPulse 3s ease-in-out infinite; }
+  @keyframes shieldPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(201,168,76,0.5)); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat {
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-weight: 500;
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 60px; }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--red);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  h2 em {
+    font-style: normal;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .section-intro {
+    font-size: 1.05rem;
+    color: rgba(240,237,232,0.55);
+    max-width: 560px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 60px;
+  }
+
+  /* SERVICES */
+  #services { background: var(--dark); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .service-card {
+    background: var(--panel);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    border: 1px solid var(--border);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-4px); }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 28px;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .service-number {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--white);
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: rgba(240,237,232,0.5);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* CERTIFICATIONS */
+  #certifications {
+    background: var(--black);
+    position: relative;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .cert-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 36px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    transition: border-color 0.3s;
+  }
+  .cert-card:hover { border-color: var(--gold-dim); }
+
+  .cert-badge {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--black);
+    text-align: center;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    flex-shrink: 0;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  .cert-info h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--gold);
+  }
+
+  .cert-info p {
+    font-size: 0.85rem;
+    color: rgba(240,237,232,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 480px;
+  }
+
+  .about-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--border);
+  }
+  .about-frame::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px; right: -20px; bottom: -20px;
+    border: 1px solid rgba(192,57,43,0.2);
+    z-index: -1;
+  }
+
+  .terminal {
+    background: #0a0a0a;
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 28px;
+    height: 100%;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-red { background: var(--red); }
+  .t-gold { background: var(--gold); }
+  .t-green { background: #27ae60; }
+  .t-title { margin-left: 8px; color: var(--grey); font-size: 0.7rem; }
+
+  .t-line { margin-bottom: 8px; line-height: 1.6; }
+  .t-prompt { color: var(--gold); }
+  .t-cmd { color: var(--white); }
+  .t-out { color: rgba(240,237,232,0.4); }
+  .t-success { color: #27ae60; }
+  .t-warn { color: var(--red); }
+  .t-cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--gold);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .about-text .section-tag { margin-top: 0; }
+
+  .about-list {
+    list-style: none;
+    margin-top: 32px;
+  }
+  .about-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: rgba(240,237,232,0.7);
+    font-weight: 400;
+  }
+  .about-list li::before {
+    content: '◆';
+    color: var(--red);
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* PROCESS */
+  #process { background: var(--black); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 36px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+
+  .step {
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .step-num {
+    width: 72px; height: 72px;
+    border: 1px solid var(--gold-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    background: var(--black);
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .step:hover .step-num {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+  }
+
+  .step h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .step p {
+    font-size: 0.85rem;
+    color: rgba(240,237,232,0.45);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    bottom: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(192,57,43,0.06), transparent 60%);
+    pointer-events: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-info h2 { margin-bottom: 20px; }
+
+  .contact-methods {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-method {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .contact-method:hover { border-color: var(--gold-dim); }
+
+  .contact-method-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold-dim);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .contact-method-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 4px;
+  }
+  .contact-method-value {
+    font-size: 0.95rem;
+    color: var(--white);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  input, textarea, select {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--gold-dim);
+  }
+  textarea { resize: vertical; min-height: 120px; }
+  select option { background: var(--panel); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 36px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .footer-logo span { color: var(--red); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* LANG SWITCHER */
+  .lang-switch {
+    display: flex;
+    gap: 4px;
+  }
+  .lang-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--grey);
+    padding: 4px 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav ul { display: none; }
+    #hero { padding: 120px 24px 60px; }
+    .shield-deco { display: none; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 24px; }
+    section { padding: 70px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="logo">Shield<span>Core</span></a>
+  <ul>
+    <li><a href="#services" data-fr="Services" data-en="Services">Services</a></li>
+    <li><a href="#certifications" data-fr="Certifications" data-en="Certifications">Certifications</a></li>
+    <li><a href="#about" data-fr="À Propos" data-en="About">À Propos</a></li>
+    <li><a href="#process" data-fr="Méthode" data-en="Method">Méthode</a></li>
+    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag" data-fr="// Cybersécurité — Conformité — Protection" data-en="// Cybersecurity — Compliance — Protection">
+      // Cybersécurité — Conformité — Protection
+    </div>
+    <h1 data-fr="Protéger ce qui <em>compte vraiment</em>.<br>Avant qu'il soit <span class='red'>trop tard.</span>" 
+        data-en="Protecting what <em>truly matters</em>.<br>Before it's <span class='red'>too late.</span>">
+      Protéger ce qui <em>compte vraiment</em>.<br>Avant qu'il soit <span class="red">trop tard.</span>
+    </h1>
+    <p class="hero-sub" data-fr="Consultant indépendant en cybersécurité. Audit ISO 27001, conformité NIS2, tests d'intrusion réseau et sensibilisation des équipes. Une approche terrain, rigoureuse et sans compromis." 
+       data-en="Independent cybersecurity consultant. ISO 27001 audit, NIS2 compliance, network penetration testing and team awareness. A hands-on, rigorous and uncompromising approach.">
+      Consultant indépendant en cybersécurité. Audit ISO 27001, conformité NIS2, tests d'intrusion réseau et sensibilisation des équipes. Une approche terrain, rigoureuse et sans compromis.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary" data-fr="Demander un audit" data-en="Request an audit">Demander un audit</a>
+      <a href="#services" class="btn-secondary" data-fr="Voir les services" data-en="View services">Voir les services</a>
+    </div>
+  </div>
+
+  <!-- SHIELD SVG -->
+  <div class="shield-deco">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="200" cy="200" r="190" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="4 8" class="ring1"/>
+      <!-- Middle ring -->
+      <circle cx="200" cy="200" r="155" stroke="#C0392B" stroke-width="0.3" stroke-dasharray="2 6" class="ring2"/>
+      <!-- Inner circle -->
+      <circle cx="200" cy="200" r="120" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+      <!-- Shield -->
+      <g class="shield-pulse">
+        <path d="M200 80 L280 110 L280 195 C280 245 240 285 200 310 C160 285 120 245 120 195 L120 110 Z" 
+              stroke="#C9A84C" stroke-width="1.5" fill="rgba(201,168,76,0.04)"/>
+        <path d="M200 95 L268 122 L268 193 C268 238 233 273 200 296 C167 273 132 238 132 193 L132 122 Z" 
+              stroke="rgba(192,57,43,0.4)" stroke-width="0.5" fill="none"/>
+        <!-- S letter -->
+        <text x="200" y="215" font-family="Cormorant Garamond" font-size="72" font-weight="700" 
+              fill="#C9A84C" text-anchor="middle" opacity="0.9">S</text>
+      </g>
+      <!-- Corner marks -->
+      <line x1="10" y1="200" x2="50" y2="200" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+      <line x1="350" y1="200" x2="390" y2="200" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+      <line x1="200" y1="10" x2="200" y2="50" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+      <line x1="200" y1="350" x2="200" y2="390" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat reveal">
+    <div class="stat-number">ISO</div>
+    <div class="stat-label" data-fr="27001:2022 Certifié" data-en="27001:2022 Certified">27001:2022 Certifié</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number">NIS2</div>
+    <div class="stat-label" data-fr="Conformité EU" data-en="EU Compliance">Conformité EU</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number">5+</div>
+    <div class="stat-label" data-fr="Services spécialisés" data-en="Specialized services">Services spécialisés</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-number">BE</div>
+    <div class="stat-label" data-fr="Belgique & Remote" data-en="Belgium & Remote">Belgique & Remote</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag" data-fr="// Ce que je fais" data-en="// What I do">// Ce que je fais</div>
+  <h2 data-fr="Des services de <em>haute précision</em>" data-en="<em>High precision</em> services">Des services de <em>haute précision</em></h2>
+  <p class="section-intro" data-fr="Chaque organisation est une cible potentielle. Mon rôle est de trouver vos failles avant que les attaquants ne le fassent." 
+     data-en="Every organization is a potential target. My role is to find your vulnerabilities before attackers do.">
+    Chaque organisation est une cible potentielle. Mon rôle est de trouver vos failles avant que les attaquants ne le fassent.
+  </p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-number">01</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+      <h3 data-fr="Audit ISO 27001" data-en="ISO 27001 Audit">Audit ISO 27001</h3>
+      <p class="service-desc" data-fr="Évaluation complète de votre système de management de la sécurité de l'information. Analyse des écarts, plan de traitement des risques et accompagnement à la certification." 
+         data-en="Complete evaluation of your information security management system. Gap analysis, risk treatment plan and certification support.">
+        Évaluation complète de votre système de management de la sécurité de l'information. Analyse des écarts, plan de traitement des risques et accompagnement à la certification.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-number">02</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <h3 data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</h3>
+      <p class="service-desc" data-fr="Mise en conformité avec la directive européenne NIS2. Identification des obligations, cartographie des actifs critiques et implémentation des mesures de sécurité requises." 
+         data-en="Compliance with the European NIS2 directive. Identification of obligations, mapping of critical assets and implementation of required security measures.">
+        Mise en conformité avec la directive européenne NIS2. Identification des obligations, cartographie des actifs critiques et implémentation des mesures de sécurité requises.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-number">03</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <h3 data-fr="Pentest Réseau" data-en="Network Pentest">Pentest Réseau</h3>
+      <p class="service-desc" data-fr="Tests d'intrusion sur votre infrastructure réseau et applications web. Identification des vulnérabilités exploitables, rapport détaillé et recommandations priorisées." 
+         data-en="Penetration testing on your network infrastructure and web applications. Identification of exploitable vulnerabilities, detailed report and prioritized recommendations.">
+        Tests d'intrusion sur votre infrastructure réseau et applications web. Identification des vulnérabilités exploitables, rapport détaillé et recommandations priorisées.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-number">04</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <h3 data-fr="Sensibilisation" data-en="Awareness Training">Sensibilisation</h3>
+      <p class="service-desc" data-fr="Formations et ateliers pour vos équipes. Phishing simulé, bonnes pratiques de sécurité, culture cyber. Le facteur humain reste la première vulnérabilité." 
+         data-en="Training and workshops for your teams. Simulated phishing, security best practices, cyber culture. The human factor remains the primary vulnerability.">
+        Formations et ateliers pour vos équipes. Phishing simulé, bonnes pratiques de sécurité, culture cyber. Le facteur humain reste la première vulnérabilité.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-number">05</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      <h3>RGPD</h3>
+      <p class="service-desc" data-fr="Accompagnement à la conformité RGPD. Registre des traitements, analyse d'impact (DPIA), politiques de confidentialité et gestion des incidents de données personnelles." 
+         data-en="GDPR compliance support. Processing register, impact assessment (DPIA), privacy policies and personal data incident management.">
+        Accompagnement à la conformité RGPD. Registre des traitements, analyse d'impact (DPIA), politiques de confidentialité et gestion des incidents de données personnelles.
+      </p>
+    </div>
+
+    <div class="service-card reveal" style="background: linear-gradient(135deg, rgba(192,57,43,0.08), rgba(201,168,76,0.05)); border-color: rgba(192,57,43,0.2);">
+      <span class="service-number">+</span>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--red)">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <h3 data-fr="Sur Mesure" data-en="Custom Mission">Sur Mesure</h3>
+      <p class="service-desc" data-fr="Besoin spécifique ? Chaque organisation est unique. Contactez-moi pour discuter d'une mission adaptée à votre contexte et vos enjeux." 
+         data-en="Specific need? Every organization is unique. Contact me to discuss a mission tailored to your context and challenges.">
+        Besoin spécifique ? Chaque organisation est unique. Contactez-moi pour discuter d'une mission adaptée à votre contexte et vos enjeux.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-tag" data-fr="// Expertise validée" data-en="// Validated expertise">// Expertise validée</div>
+  <h2 data-fr="<em>Certifications</em> & Formations" data-en="<em>Certifications</em> & Training"><em>Certifications</em> & Formations</h2>
+  <p class="section-intro" data-fr="Des certifications reconnues internationalement qui garantissent un niveau d'expertise et une rigueur méthodologique éprouvée." 
+     data-en="Internationally recognized certifications that guarantee a level of expertise and proven methodological rigor.">
+    Des certifications reconnues internationalement qui garantissent un niveau d'expertise et une rigueur méthodologique éprouvée.
+  </p>
+
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-badge">ISO<br>27001</div>
+      <div class="cert-info">
+        <h4>ISO/IEC 27001:2022</h4>
+        <p data-fr="Lead Implementer / Auditeur. Standard international de management de la sécurité de l'information. La référence absolue en matière de gouvernance cyber." 
+           data-en="Lead Implementer / Auditor. International standard for information security management. The absolute reference in cyber governance.">
+          Lead Implementer / Auditeur. Standard international de management de la sécurité de l'information. La référence absolue en matière de gouvernance cyber.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">NIS<br>2</div>
+      <div class="cert-info">
+        <h4>Directive NIS2 (EU)</h4>
+        <p data-fr="Expert en conformité NIS2. Directive européenne sur la sécurité des réseaux et des systèmes d'information. Obligatoire pour les entités essentielles et importantes en Europe." 
+           data-en="NIS2 compliance expert. European directive on network and information system security. Mandatory for essential and important entities in Europe.">
+          Expert en conformité NIS2. Directive européenne sur la sécurité des réseaux et des systèmes d'information. Obligatoire pour les entités essentielles et importantes en Europe.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">RGPD<br>DPO</div>
+      <div class="cert-info">
+        <h4>RGPD / GDPR</h4>
+        <p data-fr="Conformité au Règlement Général sur la Protection des Données. Protection de la vie privée et des données personnelles au sein de l'Union Européenne." 
+           data-en="Compliance with the General Data Protection Regulation. Protection of privacy and personal data within the European Union.">
+          Conformité au Règlement Général sur la Protection des Données. Protection de la vie privée et des données personnelles au sein de l'Union Européenne.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">SEC<br>OPS</div>
+      <div class="cert-info">
+        <h4 data-fr="Pentest & Audit Réseau" data-en="Pentest & Network Audit">Pentest & Audit Réseau</h4>
+        <p data-fr="Maîtrise des outils d'audit offensif : Nmap, Burpsuite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques." 
+           data-en="Mastery of offensive audit tools: Nmap, Burpsuite, Wireshark, Nikto, SQLMap. OWASP methodology and ethical penetration testing.">
+          Maîtrise des outils d'audit offensif : Nmap, Burpsuite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-frame">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="t-dot t-red"></div>
+          <div class="t-dot t-gold"></div>
+          <div class="t-dot t-green"></div>
+          <span class="t-title">shieldcore — audit_session.sh</span>
+        </div>
+        <div class="t-line"><span class="t-prompt">root@shieldcore:~$ </span><span class="t-cmd">./start_audit.sh --target client</span></div>
+        <div class="t-line"><span class="t-out">[*] Initializing security audit...</span></div>
+        <div class="t-line"><span class="t-out">[*] Loading ISO 27001 framework...</span></div>
+        <div class="t-line"><span class="t-success">[+] Framework loaded successfully</span></div>
+        <div class="t-line"><span class="t-out">[*] Running network discovery...</span></div>
+        <div class="t-line"><span class="t-out">[*] nmap -sV -sC 192.168.1.0/24</span></div>
+        <div class="t-line"><span class="t-success">[+] 24 hosts discovered</span></div>
+        <div class="t-line"><span class="t-warn">[!] CVE-2024-1234 detected on 192.168.1.5</span></div>
+        <div class="t-line"><span class="t-warn">[!] Outdated firmware: router @ 192.168.1.1</span></div>
+        <div class="t-line"><span class="t-out">[*] Checking web application security...</span></div>
+        <div class="t-line"><span class="t-warn">[!] SQL injection vector found</span></div>
+        <div class="t-line"><span class="t-out">[*] Generating report...</span></div>
+        <div class="t-line"><span class="t-success">[+] Report: 3 critical, 7 medium, 12 low</span></div>
+        <div class="t-line"><span class="t-prompt">root@shieldcore:~$ </span><span class="t-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-text reveal">
+    <div class="section-tag" data-fr="// À propos" data-en="// About">// À propos</div>
+    <h2 data-fr="Consultant <em>indépendant</em>,<br>expertise terrain" data-en="<em>Independent</em> consultant,<br>field expertise">Consultant <em>indépendant</em>,<br>expertise terrain</h2>
+    <p class="section-intro" data-fr="Passionné de cybersécurité, spécialisé en conformité ISO 27001 et NIS2. Je travaille avec les PME et ETI pour les aider à structurer leur sécurité de manière pragmatique et efficace." 
+       data-en="Cybersecurity enthusiast, specialized in ISO 27001 and NIS2 compliance. I work with SMEs to help them structure their security pragmatically and effectively.">
+      Passionné de cybersécurité, spécialisé en conformité ISO 27001 et NIS2. Je travaille avec les PME et ETI pour les aider à structurer leur sécurité de manière pragmatique et efficace.
+    </p>
+    <ul class="about-list">
+      <li data-fr="Certifié ISO 27001:2022 Lead Implementer" data-en="ISO 27001:2022 Lead Implementer Certified">Certifié ISO 27001:2022 Lead Implementer</li>
+      <li data-fr="Expert conformité NIS2 & RGPD" data-en="NIS2 & GDPR compliance expert">Expert conformité NIS2 & RGPD</li>
+      <li data-fr="Pentest réseau & audit applicatif" data-en="Network pentest & application audit">Pentest réseau & audit applicatif</li>
+      <li data-fr="Basé en Belgique, interventions Europe" data-en="Based in Belgium, European interventions">Basé en Belgique, interventions Europe</li>
+      <li data-fr="Disponible en complément d'activité" data-en="Available as complementary activity">Disponible en complément d'activité</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag" data-fr="// Comment je travaille" data-en="// How I work">// Comment je travaille</div>
+  <h2 data-fr="Une méthode <em>rigoureuse</em>" data-en="A <em>rigorous</em> method">Une méthode <em>rigoureuse</em></h2>
+  <p class="section-intro" data-fr="Chaque mission suit un processus structuré pour garantir des résultats fiables et exploitables." 
+     data-en="Every mission follows a structured process to guarantee reliable and actionable results.">
+    Chaque mission suit un processus structuré pour garantir des résultats fiables et exploitables.
+  </p>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h4 data-fr="Cadrage" data-en="Scoping">Cadrage</h4>
+      <p data-fr="Analyse de votre contexte, définition du périmètre et des objectifs de la mission." 
+         data-en="Analysis of your context, definition of the scope and mission objectives.">
+        Analyse de votre contexte, définition du périmètre et des objectifs de la mission.
+      </p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h4 data-fr="Audit" data-en="Audit">Audit</h4>
+      <p data-fr="Évaluation technique et organisationnelle approfondie selon les référentiels reconnus." 
+         data-en="In-depth technical and organizational assessment according to recognized frameworks.">
+        Évaluation technique et organisationnelle approfondie selon les référentiels reconnus.
+      </p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h4 data-fr="Rapport" data-en="Report">Rapport</h4>
+      <p data-fr="Livrables clairs et actionnables : synthèse exécutive, findings détaillés et plan de remédiation." 
+         data-en="Clear and actionable deliverables: executive summary, detailed findings and remediation plan.">
+        Livrables clairs et actionnables : synthèse exécutive, findings détaillés et plan de remédiation.
+      </p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h4 data-fr="Suivi" data-en="Follow-up">Suivi</h4>
+      <p data-fr="Accompagnement dans la mise en œuvre des recommandations et vérification des corrections." 
+         data-en="Support in implementing recommendations and verification of corrections.">
+        Accompagnement dans la mise en œuvre des recommandations et vérification des corrections.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="section-tag" data-fr="// Me contacter" data-en="// Contact me">// Me contacter</div>
+      <h2 data-fr="Parlons de votre <em>sécurité</em>" data-en="Let's talk about your <em>security</em>">Parlons de votre <em>sécurité</em></h2>
+      <p class="section-intro" data-fr="Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h." 
+         data-en="You have a compliance project, an audit to carry out or simply questions? I will respond within 24 hours.">
+        Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h.
+      </p>
+
+      <div class="contact-methods">
+        <a href="mailto:contact@shieldcore.be" class="contact-method">
+          <div class="contact-method-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-method-label">Email</div>
+            <div class="contact-method-value">contact@shieldcore.be</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com" class="contact-method">
+          <div class="contact-method-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-method-label">LinkedIn</div>
+            <div class="contact-method-value">ShieldCore Consulting</div>
+          </div>
+        </a>
+        <div class="contact-method">
+          <div class="contact-method-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-method-label" data-fr="Localisation" data-en="Location">Localisation</div>
+            <div class="contact-method-value">Belgique — Remote EU</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label data-fr="Prénom" data-en="First name">Prénom</label>
+          <input type="text" placeholder="Jean">
+        </div>
+        <div class="form-group">
+          <label data-fr="Société" data-en="Company">Société</label>
+          <input type="text" placeholder="Acme Corp">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="jean@acme.com">
+      </div>
+      <div class="form-group">
+        <label data-fr="Sujet" data-en="Subject">Sujet</label>
+        <select>
+          <option data-fr="Audit ISO 27001" data-en="ISO 27001 Audit">Audit ISO 27001</option>
+          <option data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</option>
+          <option data-fr="Pentest réseau" data-en="Network pentest">Pentest réseau</option>
+          <option data-fr="Sensibilisation équipes" data-en="Team awareness">Sensibilisation équipes</option>
+          <option>RGPD</option>
+          <option data-fr="Autre" data-en="Other">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-fr="Message" data-en="Message">Message</label>
+        <textarea placeholder="Décrivez votre besoin..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; justify-content:center; border:none; cursor:none;" 
+              data-fr="Envoyer le message" data-en="Send message">
+        Envoyer le message
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Shield<span>Core</span></div>
+  <div class="footer-copy" data-fr="© 2025 ShieldCore — Tous droits réservés" data-en="© 2025 ShieldCore — All rights reserved">
+    © 2025 ShieldCore — Tous droits réservés
+  </div>
+  <div class="footer-links">
+    <a href="#" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
+    <a href="#" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // REVEAL ON SCROLL
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // LANGUAGE SWITCH
+  let currentLang = 'fr';
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn:${lang === 'fr' ? 'first' : 'last'}-child`).classList.add('active');
+    
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      const content = el.getAttribute('data-' + lang);
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        // skip
+      } else if (el.tagName === 'OPTION') {
+        el.textContent = content;
+      } else {
+        el.innerHTML = content;
+      }
+    });
+
+    // Update placeholder
+    document.querySelector('textarea').placeholder = lang === 'fr' ? 'Décrivez votre besoin...' : 'Describe your need...';
+  }
+</script>
+</body>
+</html>
