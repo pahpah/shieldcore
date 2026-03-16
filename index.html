@@ -1,7 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
+   <meta charset="UTF-8" />
+  <title>ShieldCore — Consultant ISO 27001, NIS2 & RGPD pour PME</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta description FR -->
+  <meta name="description" content="ShieldCore accompagne les PME en Belgique et en Europe dans la mise en conformité ISO 27001:2022, NIS2 et RGPD : audit, gap analysis, documentation et sécurité opérationnelle." />
+
+  <!-- Meta description EN -->
+  <meta name="description" lang="en" content="ShieldCore helps SMEs in Belgium and Europe achieve ISO 27001:2022, NIS2 and GDPR compliance: audits, gap analysis, documentation and operational security." />
+
+  <!-- Keywords -->
+  <meta name="keywords" content="consultant ISO 27001, ISO 27001:2022, NIS2, RGPD, GDPR, audit cybersécurité, gap analysis, consultant sécurité, PME, Belgique, Europe" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ShieldCore — Consulting ISO 27001, NIS2 & RGPD" />
+  <meta property="og:description" content="Consultant indépendant pour PME : ISO 27001:2022, NIS2, RGPD, audit et gap analysis." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shieldcore.be/" />
+  <meta property="og:site_name" content="ShieldCore" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ShieldCore — Consulting ISO 27001, NIS2 & RGPD" />
+  <meta name="twitter:description" content="Consultant freelance pour PME : ISO 27001, NIS2, RGPD, audit et gap analysis." />
+
+  <!-- Langue principale -->
+  <meta http-equiv="Content-Language" content="fr,en" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "ShieldCore",
+    "url": "https://shieldcore.be/",
+    "description": "Consultant freelance spécialisé en ISO 27001:2022, NIS2 et RGPD pour PME en Belgique et en Europe.",
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "Belgium"
+      },
+      {
+        "@type": "Country",
+        "name": "France"
+      },
+      {
+        "@type": "Country",
+        "name": "Luxembourg"
+      },
+      {
+        "@type": "Country",
+        "name": "Netherlands"
+      }
+    ],
+    "serviceType": [
+      "ISO 27001:2022 consulting",
+      "NIS2 compliance",
+      "GDPR / RGPD compliance",
+      "Cybersecurity audit",
+      "Gap analysis"
+    ],
+    "inLanguage": ["fr", "en"]
+  }
+  </script>
+
+  <!-- Ton CSS / fonts / scripts existants ici -->
+  <link rel="stylesheet" href="styles.css" />
+
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABkklEQVR4nO3aOw7CQAxFUep02RcLZSusCqpIEYJk/HlzHeHCJcI+foEZxG1Zltc/141ugK4GoBugqwHoBuhqALoBukIAz8e9TE0H2N54XVe8IgghAHrwT4RpAJW2H02BG4AeOCsFZoCK24+kwAVAD5qZAhNA5e17U2AGoAfMTsEwwBW270mBCYAeTJGCIYBvR096wKPNW47IfQ5oACdANYSpR+GKKUBug7MRfr0nch2enYKjbyHkB5GZAL9+BSoBoEYYGR4DUKfgbPjo9tMAFAgjp8/o9lMAFCkYPXpHh08FyEKwDF8GYJ+CCITl0pUxfDpA5LZovXGWB7AgeIYvB+BF8L4mq2c5wNlz7AUrCWBB8D4ymcPLAM4GjH5elAc4Qsj4sCwNsE/BCIL1qzK7VxnACILnnHAJgM8URJ971fblAEcIFbYvBfiWgm0Yy/DK7SMAnro0QBRBGX85QEYKlMNPA/AiqLc/BWCP4Cl1b/1XWboBuhqAboCuBqAboKsB6AboagC6AboagG6ArgagG6DrDWPvEdNOCXVBAAAAAElFTkSuQmCC">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABkklEQVR4nO3aOw7CQAxFUep02RcLZSusCqpIEYJk/HlzHeHCJcI+foEZxG1Zltc/141ugK4GoBugqwHoBuhqALoBukIAz8e9TE0H2N54XVe8IgghAHrwT4RpAJW2H02BG4AeOCsFZoCK24+kwAVAD5qZAhNA5e17U2AGoAfMTsEwwBW270mBCYAeTJGCIYBvR096wKPNW47IfQ5oACdANYSpR+GKKUBug7MRfr0nch2enYKjbyHkB5GZAL9+BSoBoEYYGR4DUKfgbPjo9tMAFAgjp8/o9lMAFCkYPXpHh08FyEKwDF8GYJ+CCITl0pUxfDpA5LZovXGWB7AgeIYvB+BF8L4mq2c5wNlz7AUrCWBB8D4ymcPLAM4GjH5elAc4Qsj4sCwNsE/BCIL1qzK7VxnACILnnHAJgM8URJ971fblAEcIFbYvBfiWgm0Yy/DK7SMAnro0QBRBGX85QEYKlMNPA/AiqLc/BWCP4Cl1b/1XWboBuhqAboCuBqAboKsB6AboagC6AboagG6ArgagG6DrDWPvEdNOCXVBAAAAAElFTkSuQmCC">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
