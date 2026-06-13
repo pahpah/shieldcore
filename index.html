@@ -875,7 +875,48 @@
     .process-steps { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; gap: 40px; }
     footer { flex-direction: column; gap: 20px; text-align: center; }
+    .sc-cat { grid-template-columns: 110px 1fr auto; }
   }
+
+  /* SCAN WIDGET */
+  #scan { background: var(--dark); }
+  .scan-box { max-width: 720px; margin-top: 40px; }
+  .scan-input { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 24px; }
+  .scan-row { display: flex; gap: 12px; }
+  .scan-row input { flex: 1; background: #0a0a0a; border: 1px solid var(--border); color: var(--white); padding: 14px 16px; font-family: 'Share Tech Mono', monospace; font-size: .95rem; outline: none; border-radius: 4px; }
+  .scan-row input:focus { border-color: var(--gold-dim); }
+  .scan-btn { display: inline-flex; align-items: center; background: var(--gold); color: var(--black); border: none; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; padding: 0 28px; cursor: pointer; clip-path: polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%); transition: background .2s; }
+  .scan-btn:hover { background: var(--gold-light); }
+  .scan-btn:disabled { opacity: .5; cursor: default; }
+  .scan-consent { display: flex; align-items: center; gap: 9px; margin-top: 14px; font-size: .85rem; color: rgba(240,237,232,.55); }
+  .scan-consent input { accent-color: var(--gold); width: 15px; height: 15px; }
+  .scan-err { color: var(--red-bright); font-size: .82rem; margin-top: 10px; min-height: 1em; }
+  .scan-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 26px; margin-top: 14px; }
+  .scan-line { font-family: 'Share Tech Mono', monospace; font-size: .82rem; color: rgba(240,237,232,.45); padding: 5px 0; display: flex; align-items: center; gap: 10px; opacity: .25; transition: opacity .3s, color .3s; }
+  .scan-line.active { opacity: 1; color: var(--white); } .scan-line.done { opacity: 1; color: rgba(240,237,232,.6); }
+  .scan-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
+  .scan-line.active .scan-dot { background: var(--gold); } .scan-line.done .scan-dot { background: #27ae60; }
+  .sc-head { display: flex; align-items: center; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .sc-grade { width: 78px; height: 78px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.6rem; border: 2px solid; border-radius: 50%; }
+  .sc-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.4rem; }
+  .sc-head .sub { color: var(--grey); font-size: .88rem; margin-top: 3px; }
+  .sc-cats { margin: 18px 0; display: flex; flex-direction: column; gap: 11px; }
+  .sc-cat { display: grid; grid-template-columns: 180px 1fr auto; align-items: center; gap: 12px; font-size: .88rem; }
+  .sc-cat .nm { color: rgba(240,237,232,.8); }
+  .sc-bar { height: 6px; background: #0a0a0a; border-radius: 3px; overflow: hidden; }
+  .sc-bar i { display: block; height: 100%; border-radius: 3px; }
+  .sc-cat .tag { font-size: .72rem; font-weight: 600; white-space: nowrap; }
+  .sc-f { background: #0d0d0d; border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 0 4px 4px 0; padding: 12px 14px; margin-top: 8px; }
+  .sc-f .ttl { font-weight: 600; font-size: .92rem; } .sc-f .why { color: rgba(240,237,232,.5); font-size: .82rem; margin-top: 2px; }
+  .sc-f .sev { float: right; font-size: .64rem; font-weight: 700; letter-spacing: .08em; padding: 2px 8px; border-radius: 3px; background: var(--red); color: #140404; }
+  .sc-f.med { border-left-color: var(--gold); } .sc-f.med .sev { background: var(--gold); }
+  .sc-f.low { border-left-color: #6e7b85; } .sc-f.low .sev { background: #6e7b85; color: #0d1316; }
+  .sc-lock { margin-top: 14px; background: linear-gradient(180deg, rgba(192,57,43,.06), rgba(201,168,76,.05)); border: 1px solid var(--border); border-radius: 6px; padding: 22px; text-align: center; }
+  .sc-lock .big { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--white); margin: 8px 0 4px; }
+  .sc-lock .small { color: rgba(240,237,232,.55); font-size: .85rem; margin-bottom: 16px; }
+  .sc-cta { display: inline-block; background: var(--red); color: #fff; text-decoration: none; font-weight: 700; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; padding: 14px 30px; border-radius: 4px; transition: background .2s; }
+  .sc-cta:hover { background: var(--red-bright); }
+  .sc-hidden { display: none; }
 </style>
 </head>
 <body>
@@ -891,6 +932,7 @@
     <li><a href="#certifications" data-fr="Certifications" data-en="Certifications" data-nl="Certificeringen">Certifications</a></li>
     <li><a href="#about" data-fr="À Propos" data-en="About" data-nl="Over mij">À Propos</a></li>
     <li><a href="#process" data-fr="Méthode" data-en="Method" data-nl="Aanpak">Méthode</a></li>
+    <li><a href="#scan" data-fr="Scan" data-en="Scan" data-nl="Scan">Scan</a></li>
     <li><a href="#contact" data-fr="Contact" data-en="Contact" data-nl="Contact">Contact</a></li>
   </ul>
   <div class="lang-switch">
@@ -1213,6 +1255,26 @@
   </div>
 </section>
 
+<!-- SCAN -->
+<section id="scan">
+  <div class="section-tag" data-fr="// Testez votre périmètre" data-en="// Test your perimeter" data-nl="// Test uw perimeter">// Testez votre périmètre</div>
+  <h2 data-fr="Votre site est-il <em>exposé</em> ?" data-en="Is your site <em>exposed</em>?" data-nl="Is uw site <em>blootgesteld</em>?">Votre site est-il <em>exposé</em> ?</h2>
+  <p class="section-intro" data-fr="Scan passif et gratuit de votre périmètre public en 20 secondes : en-têtes de sécurité, email (SPF/DMARC), TLS, CORS. Aucune donnée modifiée." data-en="Free passive scan of your public perimeter in 20 seconds: security headers, email (SPF/DMARC), TLS, CORS. No data modified." data-nl="Gratis passieve scan van uw publieke perimeter in 20 seconden: securityheaders, e-mail (SPF/DMARC), TLS, CORS. Geen data gewijzigd.">Scan passif et gratuit de votre périmètre public en 20 secondes : en-têtes de sécurité, email (SPF/DMARC), TLS, CORS. Aucune donnée modifiée.</p>
+  <div class="scan-box">
+    <div class="scan-input" id="sc-input">
+      <label class="field-label" for="sc-domain" data-fr="Votre domaine" data-en="Your domain" data-nl="Uw domein">Votre domaine</label>
+      <div class="scan-row">
+        <input type="text" id="sc-domain" placeholder="exemple.be" autocomplete="off" spellcheck="false">
+        <button class="scan-btn" id="sc-go" data-fr="Scanner" data-en="Scan" data-nl="Scannen">Scanner</button>
+      </div>
+      <label class="scan-consent"><input type="checkbox" id="sc-consent"> <span data-fr="Je possède ce domaine ou j'ai l'autorisation de le tester" data-en="I own this domain or am authorized to test it" data-nl="Ik bezit dit domein of heb toestemming om het te testen">Je possède ce domaine ou j'ai l'autorisation de le tester</span></label>
+      <div class="scan-err" id="sc-err"></div>
+    </div>
+    <div class="scan-card sc-hidden" id="sc-anim"></div>
+    <div class="scan-card sc-hidden" id="sc-result"></div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-grid">
@@ -1354,6 +1416,52 @@
     const ph = { fr: 'Décrivez votre besoin...', nl: 'Beschrijf uw behoefte...', en: 'Describe your need...' };
     document.querySelector('textarea').placeholder = ph[lang] || ph.fr;
   }
+
+  // scan widget (calls the Cloudflare Worker at /api/scan)
+  (function(){
+    function $(id){return document.getElementById(id);}
+    var STEPS=['Résolution DNS & email','En-têtes de sécurité','Configuration TLS','Politique CORS'];
+    function esc(t){return String(t).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+    function col(s){return s==='red'?'var(--red)':s==='amber'?'var(--gold)':'#27ae60';}
+    function run(){
+      var d=$('sc-domain').value.trim();
+      $('sc-err').textContent='';
+      if(!d){$('sc-err').textContent='Entrez un domaine.';return;}
+      if(!$('sc-consent').checked){$('sc-err').textContent="Cochez l'autorisation pour lancer le scan.";return;}
+      $('sc-go').disabled=true;$('sc-result').classList.add('sc-hidden');$('sc-anim').classList.remove('sc-hidden');
+      var data=null,failed=false,errInfo=null;
+      fetch('/api/scan?domain='+encodeURIComponent(d)).then(function(r){return r.json();}).then(function(j){if(j&&!j.error)data=j;else if(j&&j.error)errInfo=j.error;else failed=true;}).catch(function(){failed=true;});
+      var box=$('sc-anim');box.innerHTML='';
+      var lines=STEPS.map(function(s){var el=document.createElement('div');el.className='scan-line';el.innerHTML='<span class="scan-dot"></span>'+s;box.appendChild(el);return el;});
+      var i=0;
+      function tick(){ if(i>0)lines[i-1].className='scan-line done';
+        if(i<lines.length){lines[i].className='scan-line active';i++;setTimeout(tick,430+Math.random()*220);}
+        else{wait(0);} }
+      function wait(n){ if(data){render(data);return;} if(errInfo){renderErr(errInfo,d);return;} if(failed||n>180){renderErr('unreachable',d);return;} setTimeout(function(){wait(n+1);},200); }
+      tick();
+    }
+    function render(r){
+      $('sc-anim').classList.add('sc-hidden');$('sc-go').disabled=false;
+      var c=$('sc-result');c.classList.remove('sc-hidden');
+      if(r.points===0){c.innerHTML='<div class="sc-head"><div class="sc-grade" style="color:#27ae60;border-color:#27ae60">A</div><div><h3>Surface externe propre</h3><div class="sub">aucun point évident côté périmètre public</div></div></div><div class="sc-lock"><div class="big">Mais le scan externe ne voit que ~20% du risque</div><div class="small">Authentification, contrôle d\'accès, logique métier, données : l\'essentiel est invisible de l\'extérieur. C\'est là qu\'un audit manuel trouve le vrai.</div><a class="sc-cta" style="background:var(--gold);color:#140404" href="#contact">Parlons de votre sécurité</a></div>';c.scrollIntoView({behavior:'smooth',block:'nearest'});return;}
+      var gc=r.points>=6?'var(--red)':r.points>=3?'var(--gold)':'#27ae60';
+      var cats=r.cats.map(function(xc){var pct=xc.n===0?100:Math.min(100,xc.n*25);var cc=col(xc.sev);var tag=xc.n===0?'<span class="tag" style="color:#27ae60">OK</span>':'<span class="tag" style="color:'+cc+'">'+xc.n+' point'+(xc.n>1?'s':'')+'</span>';return '<div class="sc-cat"><span class="nm">'+esc(xc.nm)+'</span><span class="sc-bar"><i style="width:'+pct+'%;background:'+cc+'"></i></span>'+tag+'</div>';}).join('');
+      var teas=r.teasers.map(function(t){return '<div class="sc-f '+(t.cls||'')+'"><span class="sev">'+esc(t.sev)+'</span><div class="ttl">'+esc(t.ttl)+'</div><div class="why">'+esc(t.why)+'</div></div>';}).join('');
+      var lk=r.locked>0?(r.locked+' autres constats + le plan de correction'):'Le rapport complet + le plan d\'action';
+      c.innerHTML='<div class="sc-head"><div class="sc-grade" style="color:'+gc+';border-color:'+gc+'">'+esc(r.grade)+'</div><div><h3>'+r.points+' point'+(r.points>1?'s':'')+' à corriger</h3><div class="sub">sur votre périmètre public exposé</div></div></div><div class="sc-cats">'+cats+'</div><div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:4px 0 6px">Aperçu de '+r.teasers.length+' constat'+(r.teasers.length>1?'s':'')+'</div>'+teas+'<div class="sc-lock"><div class="big">'+lk+'</div><div class="small">La liste complète, l\'explication de chaque faille et les étapes exactes pour corriger.</div><a class="sc-cta" href="#contact">Recevez le rapport complet</a></div>';
+      c.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    function renderErr(err,dom){
+      $('sc-anim').classList.add('sc-hidden');$('sc-go').disabled=false;
+      var map={no_dns:['Domaine introuvable','Aucun enregistrement DNS pour ce domaine. Le site n\'existe pas, n\'est pas publié, ou le nom est mal orthographié.'],'bad domain':['Domaine invalide','Format incorrect. Exemple : exemple.be (sans http://, sans chemin).'],unreachable:['Scan indisponible','Le service de scan n\'a pas répondu. Réessayez dans un instant.']};
+      var m=map[err]||['Scan impossible','Ce domaine n\'a pas pu être analysé.'];
+      var c=$('sc-result');c.classList.remove('sc-hidden');
+      c.innerHTML='<div class="sc-head"><div class="sc-grade" style="color:var(--red);border-color:var(--red);font-size:2.2rem">!</div><div><h3>'+m[0]+'</h3><div class="sub" style="font-family:\'Share Tech Mono\',monospace;color:var(--red-bright)">'+esc(dom)+'</div></div></div><div style="padding:16px 2px;color:rgba(240,237,232,.6);font-size:.92rem">'+m[1]+'</div>';
+      c.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    var go=$('sc-go');
+    if(go){go.addEventListener('click',run);$('sc-domain').addEventListener('keydown',function(e){if(e.key==='Enter')run();});}
+  })();
 
   // konami -> easter egg
   (function(){var s=[38,38,40,40,37,39,37,39,66,65],i=0;
