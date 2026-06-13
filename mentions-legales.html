@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales — ShieldCore</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --dark: #0f0f0f;
+    --panel: #141414;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7a6330;
+    --red: #C0392B;
+    --white: #F0EDE8;
+    --grey: #888;
+    --border: rgba(201,168,76,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; cursor: none; }
+  .cursor { position: fixed; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); mix-blend-mode: difference; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.15s ease; opacity: 0.6; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9997; opacity: 0.4; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 60px; background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--border); }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); text-decoration: none; }
+  .logo span { color: var(--red); }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--grey); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; border: 1px solid var(--border); padding: 8px 20px; transition: color 0.2s, border-color 0.2s; }
+  .back-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .back-btn::before { content: '← '; }
+
+  .page-hero { min-height: 38vh; display: flex; align-items: flex-end; padding: 120px 60px 60px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(192,57,43,0.05) 0%, transparent 60%), radial-gradient(ellipse 30% 60% at 10% 80%, rgba(201,168,76,0.03) 0%, transparent 50%); }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+  .page-hero-content { position: relative; z-index: 2; }
+
+  .section-tag { display: inline-flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--red); }
+
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; line-height: 1.05; margin-bottom: 16px; }
+  h1 em { font-style: normal; color: var(--gold); font-weight: 600; }
+  .page-sub { font-size: 1rem; color: rgba(240,237,232,0.45); font-weight: 300; border-left: 2px solid var(--red); padding-left: 16px; max-width: 520px; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 80px 60px; }
+
+  .legal-section { margin-bottom: 60px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .legal-section.visible { opacity: 1; transform: translateY(0); }
+
+  .legal-section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .legal-num { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--red); letter-spacing: 0.2em; flex-shrink: 0; }
+
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--white); }
+  h2 em { font-style: normal; color: var(--gold); }
+
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table tr { border-bottom: 1px solid rgba(201,168,76,0.06); }
+  .data-table tr:last-child { border-bottom: none; }
+  .data-table td { padding: 12px 0; font-size: 0.9rem; vertical-align: top; }
+  .data-table td:first-child { color: var(--grey); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; width: 200px; padding-right: 24px; font-weight: 500; }
+  .data-table td:last-child { color: rgba(240,237,232,0.8); }
+  .data-table a { color: var(--gold); text-decoration: none; }
+  .data-table a:hover { text-decoration: underline; }
+
+  .placeholder { font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--red); background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); padding: 2px 10px; }
+
+  .legal-text { font-size: 0.9rem; color: rgba(240,237,232,0.55); line-height: 1.8; font-weight: 300; margin-bottom: 14px; }
+  .legal-text:last-child { margin-bottom: 0; }
+  .legal-text a { color: var(--gold); text-decoration: none; }
+
+  .terminal-note { background: #0a0a0a; border: 1px solid rgba(201,168,76,0.1); border-left: 2px solid var(--gold-dim); padding: 16px 20px; margin-top: 20px; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: rgba(201,168,76,0.6); line-height: 1.6; }
+  .terminal-note::before { content: '// NOTE — '; color: var(--red); }
+
+  footer { background: var(--black); border-top: 1px solid var(--border); padding: 36px 60px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+  .footer-logo span { color: var(--red); }
+  .footer-copy { font-size: 0.75rem; color: var(--grey); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--grey); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .page-hero { padding: 100px 24px 48px; }
+    .content { padding: 48px 24px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 24px; }
+    .data-table td:first-child { width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="/" class="logo">Shield<span>Core</span></a>
+  <a href="/" class="back-btn">Retour au site</a>
+</nav>
+
+<div class="page-hero">
+  <div class="grid-overlay"></div>
+  <div class="page-hero-content">
+    <div class="section-tag">// Informations légales</div>
+    <h1>Mentions <em>légales</em></h1>
+    <p class="page-sub">Conformément à la législation belge et aux obligations d'information des sites web professionnels.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">01 —</span>
+      <h2>Éditeur du <em>site</em></h2>
+    </div>
+    <table class="data-table">
+      <tr><td>Nom</td><td>Mickael Couclet</td></tr>
+      <tr><td>Activité</td><td>Consultant indépendant en cybersécurité</td></tr>
+      <tr><td>Statut</td><td>Personne physique — Indépendant complémentaire</td></tr>
+      <tr><td>Localisation</td><td>Perwez, Brabant wallon, Belgique</td></tr>
+      <tr><td>Email</td><td><a href="mailto:contact@shieldcore.be">contact@shieldcore.be</a></td></tr>
+      <tr><td>Numéro BCE / TVA</td><td><span class="placeholder">À compléter après inscription BCE</span></td></tr>
+    </table>
+    <div class="terminal-note">Le numéro BCE sera ajouté dès l'enregistrement auprès de la Banque-Carrefour des Entreprises (business.belgium.be).</div>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">02 —</span>
+      <h2><em>Hébergement</em> du site</h2>
+    </div>
+    <table class="data-table">
+      <tr><td>Hébergeur</td><td>GitHub, Inc.</td></tr>
+      <tr><td>Service</td><td>GitHub Pages</td></tr>
+      <tr><td>Adresse</td><td>88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</td></tr>
+      <tr><td>Site</td><td><a href="https://pages.github.com" target="_blank">pages.github.com</a></td></tr>
+      <tr><td>Nom de domaine</td><td>OVH SAS — 2 rue Kellermann, 59100 Roubaix, France</td></tr>
+    </table>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">03 —</span>
+      <h2>Propriété <em>intellectuelle</em></h2>
+    </div>
+    <p class="legal-text">L'ensemble du contenu de ce site (textes, structure, code, visuels) est la propriété exclusive de Mickael Couclet — ShieldCore. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite.</p>
+    <p class="legal-text">Les marques et logos tiers mentionnés (ISO, PECB, NIS2) appartiennent à leurs détenteurs respectifs et sont cités à titre informatif uniquement.</p>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">04 —</span>
+      <h2>Données personnelles & <em>RGPD</em></h2>
+    </div>
+    <p class="legal-text">Les données collectées via le formulaire de contact (nom, email, message) sont utilisées exclusivement pour répondre à votre demande. Elles ne sont ni cédées, ni vendues à des tiers.</p>
+    <p class="legal-text">Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles en contactant : <a href="mailto:contact@shieldcore.be">contact@shieldcore.be</a></p>
+    <p class="legal-text">Autorité de contrôle compétente en Belgique : <a href="https://www.autoriteprotectiondonnees.be" target="_blank">Autorité de Protection des Données (APD)</a></p>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">05 —</span>
+      <h2><em>Cookies</em></h2>
+    </div>
+    <p class="legal-text">Ce site n'utilise pas de cookies de traçage ou publicitaires. Aucun outil d'analyse tiers (Google Analytics, etc.) n'est actuellement actif. Aucune donnée de navigation n'est collectée à votre insu.</p>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">06 —</span>
+      <h2>Limitation de <em>responsabilité</em></h2>
+    </div>
+    <p class="legal-text">Les informations publiées sur ce site sont fournies à titre indicatif. ShieldCore s'efforce de maintenir le contenu à jour mais ne peut garantir l'exactitude ou l'exhaustivité des informations à tout moment.</p>
+    <p class="legal-text">ShieldCore ne saurait être tenu responsable de tout dommage direct ou indirect résultant de l'utilisation de ce site ou des informations qu'il contient.</p>
+  </div>
+
+  <div class="legal-section">
+    <div class="legal-section-header">
+      <span class="legal-num">07 —</span>
+      <h2>Droit applicable & <em>juridiction</em></h2>
+    </div>
+    <p class="legal-text">Le présent site et ses mentions légales sont soumis au droit belge. En cas de litige, et à défaut de résolution amiable, les tribunaux compétents sont ceux du Brabant wallon, Belgique.</p>
+    <table class="data-table" style="margin-top:16px;">
+      <tr><td>Dernière mise à jour</td><td>Mars 2026</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Shield<span>Core</span></div>
+  <div class="footer-copy">© 2026 ShieldCore — Tous droits réservés</div>
+  <div class="footer-links">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="/">Accueil</a>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.legal-section').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
