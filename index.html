@@ -885,15 +885,16 @@
 <nav id="navbar">
   <a href="#hero" class="logo">Shield<span>Core</span></a>
   <ul>
-    <li><a href="#services" data-fr="Services" data-en="Services">Services</a></li>
-    <li><a href="#certifications" data-fr="Certifications" data-en="Certifications">Certifications</a></li>
-    <li><a href="#about" data-fr="À Propos" data-en="About">À Propos</a></li>
-    <li><a href="#process" data-fr="Méthode" data-en="Method">Méthode</a></li>
-    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+    <li><a href="#services" data-fr="Services" data-en="Services" data-nl="Diensten">Services</a></li>
+    <li><a href="#certifications" data-fr="Certifications" data-en="Certifications" data-nl="Certificeringen">Certifications</a></li>
+    <li><a href="#about" data-fr="À Propos" data-en="About" data-nl="Over mij">À Propos</a></li>
+    <li><a href="#process" data-fr="Méthode" data-en="Method" data-nl="Aanpak">Méthode</a></li>
+    <li><a href="#contact" data-fr="Contact" data-en="Contact" data-nl="Contact">Contact</a></li>
   </ul>
   <div class="lang-switch">
-    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
   </div>
 </nav>
 
@@ -903,20 +904,20 @@
   <div class="grid-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-tag" data-fr="// Conformité — Cybersécurité — Protection" data-en="// Compliance — Cybersecurity — Protection">
+    <div class="hero-tag" data-fr="// Conformité — Cybersécurité — Protection" data-en="// Compliance — Cybersecurity — Protection" data-nl="// Compliance — Cybersecurity — Bescherming">
       // Conformité — Cybersécurité — Protection
     </div>
     <h1 data-fr="Protéger ce qui <em>compte vraiment</em>.<br>Avant qu'il soit <span class='red'>trop tard.</span>" 
-        data-en="Protecting what <em>truly matters</em>.<br>Before it's <span class='red'>too late.</span>">
+        data-en="Protecting what <em>truly matters</em>.<br>Before it's <span class='red'>too late.</span>" data-nl="Bescherm wat <em>echt telt</em>.<br>Voordat het <span class='red'>te laat is.</span>">
       Protéger ce qui <em>compte vraiment</em>.<br>Avant qu'il soit <span class="red">trop tard.</span>
     </h1>
     <p class="hero-sub" data-fr="Consultant indépendant en cybersécurité. Je relie deux mondes qui se parlent rarement : la conformité (ISO 27001, NIS2, RGPD) et le test technique offensif. Vos obligations réglementaires deviennent des mesures concrètes, vérifiées sur le terrain."
-       data-en="Independent cybersecurity consultant. I bridge two worlds that rarely talk to each other: compliance (ISO 27001, NIS2, GDPR) and hands-on offensive testing. Your regulatory obligations become concrete controls, verified in the field.">
+       data-en="Independent cybersecurity consultant. I bridge two worlds that rarely talk to each other: compliance (ISO 27001, NIS2, GDPR) and hands-on offensive testing. Your regulatory obligations become concrete controls, verified in the field." data-nl="Onafhankelijk cybersecurity-consultant. Ik verbind twee werelden die elkaar zelden spreken: compliance (ISO 27001, NIS2, AVG) en offensief technisch testen. Uw wettelijke verplichtingen worden concrete maatregelen, getoetst in de praktijk.">
       Consultant indépendant en cybersécurité. Je relie deux mondes qui se parlent rarement : la conformité (ISO 27001, NIS2, RGPD) et le test technique offensif. Vos obligations réglementaires deviennent des mesures concrètes, vérifiées sur le terrain.
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary" data-fr="Demander un audit" data-en="Request an audit">Demander un audit</a>
-      <a href="#services" class="btn-secondary" data-fr="Voir les services" data-en="View services">Voir les services</a>
+      <a href="#contact" class="btn-primary" data-fr="Demander un audit" data-en="Request an audit" data-nl="Een audit aanvragen">Demander un audit</a>
+      <a href="#services" class="btn-secondary" data-fr="Voir les services" data-en="View services" data-nl="Bekijk de diensten">Voir les services</a>
     </div>
   </div>
 
@@ -952,28 +953,28 @@
 <div class="stats-bar">
   <div class="stat reveal">
     <div class="stat-number">ISO</div>
-    <div class="stat-label" data-fr="SMSI & gouvernance" data-en="ISMS & governance">SMSI & gouvernance</div>
+    <div class="stat-label" data-fr="SMSI & gouvernance" data-en="ISMS & governance" data-nl="ISMS & governance">SMSI & gouvernance</div>
   </div>
   <div class="stat reveal">
     <div class="stat-number">NIS2</div>
-    <div class="stat-label" data-fr="Conformité EU" data-en="EU Compliance">Conformité EU</div>
+    <div class="stat-label" data-fr="Conformité EU" data-en="EU Compliance" data-nl="EU-compliance">Conformité EU</div>
   </div>
   <div class="stat reveal">
     <div class="stat-number">5+</div>
-    <div class="stat-label" data-fr="Services spécialisés" data-en="Specialized services">Services spécialisés</div>
+    <div class="stat-label" data-fr="Services spécialisés" data-en="Specialized services" data-nl="Gespecialiseerde diensten">Services spécialisés</div>
   </div>
   <div class="stat reveal">
     <div class="stat-number">BE</div>
-    <div class="stat-label" data-fr="Belgique & Remote" data-en="Belgium & Remote">Belgique & Remote</div>
+    <div class="stat-label" data-fr="Belgique & Remote" data-en="Belgium & Remote" data-nl="België & Remote">Belgique & Remote</div>
   </div>
 </div>
 
 <!-- SERVICES -->
 <section id="services">
-  <div class="section-tag" data-fr="// Ce que je fais" data-en="// What I do">// Ce que je fais</div>
-  <h2 data-fr="Des services de <em>haute précision</em>" data-en="<em>High precision</em> services">Des services de <em>haute précision</em></h2>
+  <div class="section-tag" data-fr="// Ce que je fais" data-en="// What I do" data-nl="// Wat ik doe">// Ce que je fais</div>
+  <h2 data-fr="Des services de <em>haute précision</em>" data-en="<em>High precision</em> services" data-nl="Diensten met <em>hoge precisie</em>">Des services de <em>haute précision</em></h2>
   <p class="section-intro" data-fr="Chaque organisation est une cible potentielle. Mon rôle est de trouver vos failles avant que les attaquants ne le fassent." 
-     data-en="Every organization is a potential target. My role is to find your vulnerabilities before attackers do.">
+     data-en="Every organization is a potential target. My role is to find your vulnerabilities before attackers do." data-nl="Elke organisatie is een potentieel doelwit. Mijn rol is om uw kwetsbaarheden te vinden vóór de aanvallers dat doen.">
     Chaque organisation est une cible potentielle. Mon rôle est de trouver vos failles avant que les attaquants ne le fassent.
   </p>
 
@@ -984,9 +985,9 @@
         <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/>
         <polyline points="9 12 11 14 15 10"/>
       </svg>
-      <h3 data-fr="Audit ISO 27001" data-en="ISO 27001 Audit">Audit ISO 27001</h3>
+      <h3 data-fr="Audit ISO 27001" data-en="ISO 27001 Audit" data-nl="ISO 27001-audit">Audit ISO 27001</h3>
       <p class="service-desc" data-fr="Évaluation complète de votre système de management de la sécurité de l'information. Analyse des écarts, plan de traitement des risques et accompagnement à la certification." 
-         data-en="Complete evaluation of your information security management system. Gap analysis, risk treatment plan and certification support.">
+         data-en="Complete evaluation of your information security management system. Gap analysis, risk treatment plan and certification support." data-nl="Volledige evaluatie van uw managementsysteem voor informatiebeveiliging (ISMS). Gap-analyse, risicobehandelplan en begeleiding naar certificering.">
         Évaluation complète de votre système de management de la sécurité de l'information. Analyse des écarts, plan de traitement des risques et accompagnement à la certification.
       </p>
     </div>
@@ -997,9 +998,9 @@
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
-      <h3 data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</h3>
+      <h3 data-fr="Conformité NIS2" data-en="NIS2 Compliance" data-nl="NIS2-compliance">Conformité NIS2</h3>
       <p class="service-desc" data-fr="Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en œuvre et préparation aux obligations de notification d'incident."
-         data-en="NIS2 and CyberFundamentals (CyFun, the Belgian CCB framework) compliance. Gap analysis, mapping of critical assets, implementation roadmap and preparation for incident-notification obligations.">
+         data-en="NIS2 and CyberFundamentals (CyFun, the Belgian CCB framework) compliance. Gap analysis, mapping of critical assets, implementation roadmap and preparation for incident-notification obligations." data-nl="NIS2- en CyberFundamentals-compliance (CyFun, het raamwerk van het Belgische CCB). Gap-analyse, inventarisatie van kritieke assets, implementatieroadmap en voorbereiding op de meldplicht bij incidenten.">
         Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en œuvre et préparation aux obligations de notification d'incident.
       </p>
     </div>
@@ -1011,9 +1012,9 @@
         <line x1="12" y1="8" x2="12" y2="12"/>
         <line x1="12" y1="16" x2="12.01" y2="16"/>
       </svg>
-      <h3 data-fr="Pentest Réseau" data-en="Network Pentest">Pentest Réseau</h3>
+      <h3 data-fr="Pentest Réseau" data-en="Network Pentest" data-nl="Netwerk-pentest">Pentest Réseau</h3>
       <p class="service-desc" data-fr="Tests d'intrusion sur votre infrastructure réseau et applications web. Identification des vulnérabilités exploitables, rapport détaillé et recommandations priorisées." 
-         data-en="Penetration testing on your network infrastructure and web applications. Identification of exploitable vulnerabilities, detailed report and prioritized recommendations.">
+         data-en="Penetration testing on your network infrastructure and web applications. Identification of exploitable vulnerabilities, detailed report and prioritized recommendations." data-nl="Penetratietests op uw netwerkinfrastructuur en webapplicaties. Identificatie van exploiteerbare kwetsbaarheden, gedetailleerd rapport en geprioriteerde aanbevelingen.">
         Tests d'intrusion sur votre infrastructure réseau et applications web. Identification des vulnérabilités exploitables, rapport détaillé et recommandations priorisées.
       </p>
     </div>
@@ -1026,9 +1027,9 @@
         <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
       </svg>
-      <h3 data-fr="Sensibilisation" data-en="Awareness Training">Sensibilisation</h3>
+      <h3 data-fr="Sensibilisation" data-en="Awareness Training" data-nl="Sensibilisering">Sensibilisation</h3>
       <p class="service-desc" data-fr="Formations et ateliers pour vos équipes. Phishing simulé, bonnes pratiques de sécurité, culture cyber. Le facteur humain reste la première vulnérabilité." 
-         data-en="Training and workshops for your teams. Simulated phishing, security best practices, cyber culture. The human factor remains the primary vulnerability.">
+         data-en="Training and workshops for your teams. Simulated phishing, security best practices, cyber culture. The human factor remains the primary vulnerability." data-nl="Opleidingen en workshops voor uw teams. Gesimuleerde phishing, security best practices, cybercultuur. De menselijke factor blijft de grootste kwetsbaarheid.">
         Formations et ateliers pour vos équipes. Phishing simulé, bonnes pratiques de sécurité, culture cyber. Le facteur humain reste la première vulnérabilité.
       </p>
     </div>
@@ -1044,7 +1045,7 @@
       </svg>
       <h3>RGPD</h3>
       <p class="service-desc" data-fr="Accompagnement à la conformité RGPD. Registre des traitements, analyse d'impact (DPIA), politiques de confidentialité et gestion des incidents de données personnelles." 
-         data-en="GDPR compliance support. Processing register, impact assessment (DPIA), privacy policies and personal data incident management.">
+         data-en="GDPR compliance support. Processing register, impact assessment (DPIA), privacy policies and personal data incident management." data-nl="Begeleiding bij AVG-compliance. Verwerkingsregister, gegevensbeschermingseffectbeoordeling (DPIA), privacybeleid en beheer van datalekken.">
         Accompagnement à la conformité RGPD. Registre des traitements, analyse d'impact (DPIA), politiques de confidentialité et gestion des incidents de données personnelles.
       </p>
     </div>
@@ -1054,9 +1055,9 @@
       <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--red)" aria-hidden="true" focusable="false">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
       </svg>
-      <h3 data-fr="Sur Mesure" data-en="Custom Mission">Sur Mesure</h3>
+      <h3 data-fr="Sur Mesure" data-en="Custom Mission" data-nl="Op maat">Sur Mesure</h3>
       <p class="service-desc" data-fr="Besoin spécifique ? Chaque organisation est unique. Contactez-moi pour discuter d'une mission adaptée à votre contexte et vos enjeux." 
-         data-en="Specific need? Every organization is unique. Contact me to discuss a mission tailored to your context and challenges.">
+         data-en="Specific need? Every organization is unique. Contact me to discuss a mission tailored to your context and challenges." data-nl="Specifieke behoefte? Elke organisatie is uniek. Neem contact op om een opdracht te bespreken die past bij uw context en uitdagingen.">
         Besoin spécifique ? Chaque organisation est unique. Contactez-moi pour discuter d'une mission adaptée à votre contexte et vos enjeux.
       </p>
     </div>
@@ -1065,10 +1066,10 @@
 
 <!-- CERTIFICATIONS -->
 <section id="certifications">
-  <div class="section-tag" data-fr="// Compétences & référentiels" data-en="// Skills & frameworks">// Compétences & référentiels</div>
-  <h2 data-fr="<em>Formation</em> & expertise" data-en="<em>Training</em> & expertise"><em>Formation</em> & expertise</h2>
+  <div class="section-tag" data-fr="// Compétences & référentiels" data-en="// Skills & frameworks" data-nl="// Competenties & raamwerken">// Compétences & référentiels</div>
+  <h2 data-fr="<em>Formation</em> & expertise" data-en="<em>Training</em> & expertise" data-nl="<em>Opleiding</em> & expertise"><em>Formation</em> & expertise</h2>
   <p class="section-intro" data-fr="Une démarche de certification structurée et des compétences techniques éprouvées sur le terrain. Référentiels reconnus internationalement (ISO 27001, NIS2, RGPD), méthodologie rigoureuse."
-     data-en="A structured certification path and field-proven technical skills. Internationally recognized frameworks (ISO 27001, NIS2, GDPR), rigorous methodology.">
+     data-en="A structured certification path and field-proven technical skills. Internationally recognized frameworks (ISO 27001, NIS2, GDPR), rigorous methodology." data-nl="Een gestructureerd certificeringstraject en technische vaardigheden die hun nut in de praktijk bewijzen. Internationaal erkende raamwerken (ISO 27001, NIS2, AVG), rigoureuze methodologie.">
     Une démarche de certification structurée et des compétences techniques éprouvées sur le terrain. Référentiels reconnus internationalement (ISO 27001, NIS2, RGPD), méthodologie rigoureuse.
   </p>
 
@@ -1078,7 +1079,7 @@
       <div class="cert-info">
         <h4>ISO/IEC 27001:2022</h4>
         <p data-fr="Formation Lead Implementer (PECB), certification en cours. Standard international de management de la sécurité de l'information : la référence en matière de gouvernance cyber."
-           data-en="Lead Implementer training (PECB), certification in progress. International standard for information security management: the reference in cyber governance.">
+           data-en="Lead Implementer training (PECB), certification in progress. International standard for information security management: the reference in cyber governance." data-nl="Opleiding Lead Implementer (PECB), certificering loopt. Internationale standaard voor informatiebeveiliging: dé referentie voor cybergovernance.">
           Formation Lead Implementer (PECB), certification en cours. Standard international de management de la sécurité de l'information : la référence en matière de gouvernance cyber.
         </p>
       </div>
@@ -1089,7 +1090,7 @@
       <div class="cert-info">
         <h4>Directive NIS2 (EU)</h4>
         <p data-fr="Spécialisé en conformité NIS2 et CyFun. Directive européenne sur la sécurité des réseaux et des systèmes d'information. Obligatoire pour les entités essentielles et importantes en Europe."
-           data-en="Specialized in NIS2 and CyFun compliance. European directive on network and information system security. Mandatory for essential and important entities in Europe.">
+           data-en="Specialized in NIS2 and CyFun compliance. European directive on network and information system security. Mandatory for essential and important entities in Europe." data-nl="Gespecialiseerd in NIS2- en CyFun-compliance. Europese richtlijn voor de beveiliging van netwerk- en informatiesystemen. Verplicht voor essentiële en belangrijke entiteiten in Europa.">
           Spécialisé en conformité NIS2 et CyFun. Directive européenne sur la sécurité des réseaux et des systèmes d'information. Obligatoire pour les entités essentielles et importantes en Europe.
         </p>
       </div>
@@ -1100,7 +1101,7 @@
       <div class="cert-info">
         <h4>RGPD / GDPR</h4>
         <p data-fr="Conformité au Règlement Général sur la Protection des Données. Protection de la vie privée et des données personnelles au sein de l'Union Européenne." 
-           data-en="Compliance with the General Data Protection Regulation. Protection of privacy and personal data within the European Union.">
+           data-en="Compliance with the General Data Protection Regulation. Protection of privacy and personal data within the European Union." data-nl="Conformiteit met de Algemene Verordening Gegevensbescherming (AVG). Bescherming van de privacy en persoonsgegevens binnen de Europese Unie.">
           Conformité au Règlement Général sur la Protection des Données. Protection de la vie privée et des données personnelles au sein de l'Union Européenne.
         </p>
       </div>
@@ -1109,9 +1110,9 @@
     <div class="cert-card reveal">
       <div class="cert-badge">SEC<br>OPS</div>
       <div class="cert-info">
-        <h4 data-fr="Pentest & Audit Réseau" data-en="Pentest & Network Audit">Pentest & Audit Réseau</h4>
+        <h4 data-fr="Pentest & Audit Réseau" data-en="Pentest & Network Audit" data-nl="Pentest & netwerkaudit">Pentest & Audit Réseau</h4>
         <p data-fr="Maîtrise des outils d'audit offensif : Nmap, Burp Suite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques." 
-           data-en="Mastery of offensive audit tools: Nmap, Burp Suite, Wireshark, Nikto, SQLMap. OWASP methodology and ethical penetration testing.">
+           data-en="Mastery of offensive audit tools: Nmap, Burp Suite, Wireshark, Nikto, SQLMap. OWASP methodology and ethical penetration testing." data-nl="Beheersing van offensieve audittools: Nmap, Burp Suite, Wireshark, Nikto, SQLMap. OWASP-methodologie en ethische penetratietests.">
           Maîtrise des outils d'audit offensif : Nmap, Burp Suite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques.
         </p>
       </div>
@@ -1149,61 +1150,61 @@
   </div>
 
   <div class="about-text reveal">
-    <div class="section-tag" data-fr="// À propos" data-en="// About">// À propos</div>
-    <h2 data-fr="Consultant <em>indépendant</em>,<br>expertise terrain" data-en="<em>Independent</em> consultant,<br>field expertise">Consultant <em>indépendant</em>,<br>expertise terrain</h2>
+    <div class="section-tag" data-fr="// À propos" data-en="// About" data-nl="// Over mij">// À propos</div>
+    <h2 data-fr="Consultant <em>indépendant</em>,<br>expertise terrain" data-en="<em>Independent</em> consultant,<br>field expertise" data-nl="<em>Onafhankelijk</em> consultant,<br>praktijkexpertise">Consultant <em>indépendant</em>,<br>expertise terrain</h2>
     <p class="section-intro" data-fr="Je combine la rigueur de la conformité (ISO 27001, NIS2, RGPD) et une pratique technique offensive issue du terrain. J'accompagne les PME et ETI pour structurer leur sécurité de façon pragmatique : des exigences qui tiennent à l'audit, et des contrôles qui tiennent face à un attaquant."
-       data-en="I combine the rigor of compliance (ISO 27001, NIS2, GDPR) with hands-on offensive practice from the field. I help SMEs structure their security pragmatically: requirements that hold up to an audit, and controls that hold up against an attacker.">
+       data-en="I combine the rigor of compliance (ISO 27001, NIS2, GDPR) with hands-on offensive practice from the field. I help SMEs structure their security pragmatically: requirements that hold up to an audit, and controls that hold up against an attacker." data-nl="Ik combineer de striktheid van compliance (ISO 27001, NIS2, AVG) met offensieve technische praktijkervaring. Ik help kmo's en middelgrote bedrijven hun beveiliging pragmatisch te structureren: eisen die de audit doorstaan, en maatregelen die standhouden tegen een aanvaller.">
       Je combine la rigueur de la conformité (ISO 27001, NIS2, RGPD) et une pratique technique offensive issue du terrain. J'accompagne les PME et ETI pour structurer leur sécurité de façon pragmatique : des exigences qui tiennent à l'audit, et des contrôles qui tiennent face à un attaquant.
     </p>
     <ul class="about-list">
-      <li data-fr="Formation PECB ISO 27001 Lead Implementer (certification en cours)" data-en="PECB ISO 27001 Lead Implementer training (certification in progress)">Formation PECB ISO 27001 Lead Implementer (certification en cours)</li>
-      <li data-fr="Conformité NIS2, CyFun & RGPD" data-en="NIS2, CyFun & GDPR compliance">Conformité NIS2, CyFun & RGPD</li>
-      <li data-fr="Pentest réseau & audit applicatif" data-en="Network pentest & application audit">Pentest réseau & audit applicatif</li>
-      <li data-fr="Basé en Belgique, interventions Europe" data-en="Based in Belgium, working across Europe">Basé en Belgique, interventions Europe</li>
-      <li data-fr="Disponible en complément d'activité" data-en="Available as complementary activity">Disponible en complément d'activité</li>
+      <li data-fr="Formation PECB ISO 27001 Lead Implementer (certification en cours)" data-en="PECB ISO 27001 Lead Implementer training (certification in progress)" data-nl="Opleiding PECB ISO 27001 Lead Implementer (certificering loopt)">Formation PECB ISO 27001 Lead Implementer (certification en cours)</li>
+      <li data-fr="Conformité NIS2, CyFun & RGPD" data-en="NIS2, CyFun & GDPR compliance" data-nl="NIS2-, CyFun- & AVG-compliance">Conformité NIS2, CyFun & RGPD</li>
+      <li data-fr="Pentest réseau & audit applicatif" data-en="Network pentest & application audit" data-nl="Netwerk-pentest & applicatie-audit">Pentest réseau & audit applicatif</li>
+      <li data-fr="Basé en Belgique, interventions Europe" data-en="Based in Belgium, working across Europe" data-nl="Gevestigd in België, actief in heel Europa">Basé en Belgique, interventions Europe</li>
+      <li data-fr="Disponible en complément d'activité" data-en="Available as complementary activity" data-nl="Beschikbaar in bijberoep">Disponible en complément d'activité</li>
     </ul>
   </div>
 </section>
 
 <!-- PROCESS -->
 <section id="process">
-  <div class="section-tag" data-fr="// Comment je travaille" data-en="// How I work">// Comment je travaille</div>
-  <h2 data-fr="Une méthode <em>rigoureuse</em>" data-en="A <em>rigorous</em> method">Une méthode <em>rigoureuse</em></h2>
+  <div class="section-tag" data-fr="// Comment je travaille" data-en="// How I work" data-nl="// Hoe ik werk">// Comment je travaille</div>
+  <h2 data-fr="Une méthode <em>rigoureuse</em>" data-en="A <em>rigorous</em> method" data-nl="Een <em>rigoureuze</em> methode">Une méthode <em>rigoureuse</em></h2>
   <p class="section-intro" data-fr="Chaque mission suit un processus structuré pour garantir des résultats fiables et exploitables." 
-     data-en="Every mission follows a structured process to guarantee reliable and actionable results.">
+     data-en="Every mission follows a structured process to guarantee reliable and actionable results." data-nl="Elke opdracht volgt een gestructureerd proces om betrouwbare en bruikbare resultaten te garanderen.">
     Chaque mission suit un processus structuré pour garantir des résultats fiables et exploitables.
   </p>
 
   <div class="process-steps">
     <div class="step reveal">
       <div class="step-num">01</div>
-      <h4 data-fr="Cadrage" data-en="Scoping">Cadrage</h4>
+      <h4 data-fr="Cadrage" data-en="Scoping" data-nl="Afbakening">Cadrage</h4>
       <p data-fr="Analyse de votre contexte, définition du périmètre et des objectifs de la mission." 
-         data-en="Analysis of your context, definition of the scope and mission objectives.">
+         data-en="Analysis of your context, definition of the scope and mission objectives." data-nl="Analyse van uw context, bepaling van de scope en de doelstellingen van de opdracht.">
         Analyse de votre contexte, définition du périmètre et des objectifs de la mission.
       </p>
     </div>
     <div class="step reveal">
       <div class="step-num">02</div>
-      <h4 data-fr="Audit" data-en="Audit">Audit</h4>
+      <h4 data-fr="Audit" data-en="Audit" data-nl="Audit">Audit</h4>
       <p data-fr="Évaluation technique et organisationnelle approfondie selon les référentiels reconnus." 
-         data-en="In-depth technical and organizational assessment according to recognized frameworks.">
+         data-en="In-depth technical and organizational assessment according to recognized frameworks." data-nl="Grondige technische en organisatorische evaluatie volgens erkende raamwerken.">
         Évaluation technique et organisationnelle approfondie selon les référentiels reconnus.
       </p>
     </div>
     <div class="step reveal">
       <div class="step-num">03</div>
-      <h4 data-fr="Rapport" data-en="Report">Rapport</h4>
+      <h4 data-fr="Rapport" data-en="Report" data-nl="Rapport">Rapport</h4>
       <p data-fr="Livrables clairs et actionnables : synthèse exécutive, findings détaillés et plan de remédiation." 
-         data-en="Clear and actionable deliverables: executive summary, detailed findings and remediation plan.">
+         data-en="Clear and actionable deliverables: executive summary, detailed findings and remediation plan." data-nl="Heldere en bruikbare deliverables: managementsamenvatting, gedetailleerde bevindingen en remediëringsplan.">
         Livrables clairs et actionnables : synthèse exécutive, findings détaillés et plan de remédiation.
       </p>
     </div>
     <div class="step reveal">
       <div class="step-num">04</div>
-      <h4 data-fr="Suivi" data-en="Follow-up">Suivi</h4>
+      <h4 data-fr="Suivi" data-en="Follow-up" data-nl="Opvolging">Suivi</h4>
       <p data-fr="Accompagnement dans la mise en œuvre des recommandations et vérification des corrections." 
-         data-en="Support in implementing recommendations and verification of corrections.">
+         data-en="Support in implementing recommendations and verification of corrections." data-nl="Begeleiding bij de implementatie van de aanbevelingen en verificatie van de correcties.">
         Accompagnement dans la mise en œuvre des recommandations et vérification des corrections.
       </p>
     </div>
@@ -1214,10 +1215,10 @@
 <section id="contact">
   <div class="contact-grid">
     <div class="contact-info reveal">
-      <div class="section-tag" data-fr="// Me contacter" data-en="// Contact me">// Me contacter</div>
-      <h2 data-fr="Parlons de votre <em>sécurité</em>" data-en="Let's talk about your <em>security</em>">Parlons de votre <em>sécurité</em></h2>
+      <div class="section-tag" data-fr="// Me contacter" data-en="// Contact me" data-nl="// Contacteer mij">// Me contacter</div>
+      <h2 data-fr="Parlons de votre <em>sécurité</em>" data-en="Let's talk about your <em>security</em>" data-nl="Laten we het over uw <em>beveiliging</em> hebben">Parlons de votre <em>sécurité</em></h2>
       <p class="section-intro" data-fr="Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h." 
-         data-en="Have a compliance project, an audit to run, or just a few questions? I reply within 24 hours.">
+         data-en="Have a compliance project, an audit to run, or just a few questions? I reply within 24 hours." data-nl="Hebt u een compliance-project, een uit te voeren audit of gewoon enkele vragen? Ik antwoord binnen de 24 uur.">
         Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h.
       </p>
 
@@ -1242,7 +1243,7 @@
             </svg>
           </div>
           <div>
-            <div class="contact-method-label" data-fr="Localisation" data-en="Location">Localisation</div>
+            <div class="contact-method-label" data-fr="Localisation" data-en="Location" data-nl="Locatie">Localisation</div>
             <div class="contact-method-value">Belgique — Remote EU</div>
           </div>
         </div>
@@ -1252,35 +1253,35 @@
     <form class="contact-form reveal" action="https://formspree.io/f/xlgpwnja" method="POST">
       <div class="form-row">
         <div class="form-group">
-          <label for="f-prenom" data-fr="Prénom" data-en="First name">Prénom</label>
+          <label for="f-prenom" data-fr="Prénom" data-en="First name" data-nl="Voornaam">Prénom</label>
           <input id="f-prenom" type="text" name="prenom" placeholder="Jean">
         </div>
         <div class="form-group">
-          <label for="f-societe" data-fr="Société" data-en="Company">Société</label>
+          <label for="f-societe" data-fr="Société" data-en="Company" data-nl="Bedrijf">Société</label>
           <input id="f-societe" type="text" name="societe" placeholder="Acme Corp">
         </div>
       </div>
       <div class="form-group">
-        <label for="f-email" data-fr="Email" data-en="Email">Email</label>
+        <label for="f-email" data-fr="Email" data-en="Email" data-nl="E-mail">Email</label>
         <input id="f-email" type="email" name="email" placeholder="jean@acme.com">
       </div>
       <div class="form-group">
-        <label for="f-sujet" data-fr="Sujet" data-en="Subject">Sujet</label>
+        <label for="f-sujet" data-fr="Sujet" data-en="Subject" data-nl="Onderwerp">Sujet</label>
         <select id="f-sujet" name="sujet">
-          <option data-fr="Audit ISO 27001" data-en="ISO 27001 Audit">Audit ISO 27001</option>
-          <option data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</option>
-          <option data-fr="Pentest réseau" data-en="Network pentest">Pentest réseau</option>
-          <option data-fr="Sensibilisation équipes" data-en="Team awareness">Sensibilisation équipes</option>
+          <option data-fr="Audit ISO 27001" data-en="ISO 27001 Audit" data-nl="ISO 27001-audit">Audit ISO 27001</option>
+          <option data-fr="Conformité NIS2" data-en="NIS2 Compliance" data-nl="NIS2-compliance">Conformité NIS2</option>
+          <option data-fr="Pentest réseau" data-en="Network pentest" data-nl="Netwerk-pentest">Pentest réseau</option>
+          <option data-fr="Sensibilisation équipes" data-en="Team awareness" data-nl="Sensibilisering van teams">Sensibilisation équipes</option>
           <option>RGPD</option>
-          <option data-fr="Autre" data-en="Other">Autre</option>
+          <option data-fr="Autre" data-en="Other" data-nl="Andere">Autre</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="f-message" data-fr="Message" data-en="Message">Message</label>
+        <label for="f-message" data-fr="Message" data-en="Message" data-nl="Bericht">Message</label>
         <textarea id="f-message" name="message" placeholder="Décrivez votre besoin..."></textarea>
       </div>
       <button type="submit" class="btn-primary" style="width:100%; justify-content:center; border:none;"
-              data-fr="Envoyer le message" data-en="Send message">
+              data-fr="Envoyer le message" data-en="Send message" data-nl="Bericht versturen">
         Envoyer le message
       </button>
     </form>
@@ -1290,12 +1291,12 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Shield<span>Core</span></div>
-  <div class="footer-copy" data-fr="© 2026 ShieldCore — Tous droits réservés" data-en="© 2026 ShieldCore — All rights reserved">
+  <div class="footer-copy" data-fr="© 2026 ShieldCore — Tous droits réservés" data-en="© 2026 ShieldCore — All rights reserved" data-nl="© 2026 ShieldCore — Alle rechten voorbehouden">
     © 2026 ShieldCore — Tous droits réservés
   </div>
   <div class="footer-links">
-    <a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
-    <a href="confidentialite.html" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+    <a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice" data-nl="Wettelijke vermeldingen">Mentions légales</a>
+    <a href="confidentialite.html" data-fr="Confidentialité" data-en="Privacy" data-nl="Privacy">Confidentialité</a>
   </div>
 </footer>
 
@@ -1333,9 +1334,9 @@
   let currentLang = 'fr';
   function setLang(lang) {
     currentLang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.lang-btn:${lang === 'fr' ? 'first' : 'last'}-child`).classList.add('active');
-    
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       const content = el.getAttribute('data-' + lang);
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -1348,7 +1349,8 @@
     });
 
     // Update placeholder
-    document.querySelector('textarea').placeholder = lang === 'fr' ? 'Décrivez votre besoin...' : 'Describe your need...';
+    const ph = { fr: 'Décrivez votre besoin...', nl: 'Beschrijf uw behoefte...', en: 'Describe your need...' };
+    document.querySelector('textarea').placeholder = ph[lang] || ph.fr;
   }
 </script>
 </body>
