@@ -7,15 +7,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="aDumqvY-O3YU869kidsrtXnqXSyfuZCdxjnPtMOV-kc" />
 <!-- SEO de base -->
-<meta name="description" content="Consultant indépendant ISO 27001, NIS2 et RGPD en Belgique. Analyse d'écart, mise en conformité et tests techniques pour PME. Formation PECB Lead Implementer. Brabant wallon & remote EU.">
-<meta name="keywords" content="consultant ISO 27001 belgique, audit ISO 27001, conformité NIS2, pentest, RGPD, Brabant wallon, ISO27001, NIS2, LEAD IMPLENENTER, CYFUN, GAP ANALYSIS, SMSI, consultant cybersécurité belgique">
+<meta name="description" content="Consultant indépendant ISO 27001, NIS2 et RGPD en Belgique (Brabant wallon, remote EU). Analyse d'écart, mise en conformité et tests techniques pour PME.">
+<meta name="keywords" content="consultant ISO 27001 belgique, audit ISO 27001, conformité NIS2, pentest, RGPD, Brabant wallon, ISO27001, NIS2, LEAD IMPLEMENTER, CYFUN, GAP ANALYSIS, SMSI, consultant cybersécurité belgique">
 <meta name="author" content="Mickael Couclet — ShieldCore">
 <meta name="robots" content="index, follow">
 
 <!-- Open Graph (réseaux sociaux) -->
 <meta property="og:title" content="ShieldCore — Cybersecurity Consulting Belgique">
 <meta property="og:description" content="Audit ISO 27001, conformité NIS2, pentest réseau. Consultant indépendant basé en Belgique.">
-<meta property="og:url" content="https://www.shieldcore.be">
+<meta property="og:url" content="https://www.shieldcore.be/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_BE">
 
@@ -26,7 +26,7 @@
   "@type": "ProfessionalService",
   "name": "ShieldCore",
   "description": "Consultant ISO 27001 belgique, Consultant indépendant en cybersécurité. Audit ISO 27001, conformité NIS2, pentest réseau.",
-  "url": "https://www.shieldcore.be",
+  "url": "https://www.shieldcore.be/",
   "email": "contact@shieldcore.be",
   "areaServed": "BE",
   "address": {
@@ -68,10 +68,9 @@
     color: var(--white);
     font-family: 'Rajdhani', sans-serif;
     overflow-x: hidden;
-    cursor: none;
   }
 
-  /* CUSTOM CURSOR */
+  /* CUSTOM CURSOR (desktop fine-pointer only; native cursor stays everywhere else) */
   .cursor {
     position: fixed;
     width: 12px; height: 12px;
@@ -80,8 +79,9 @@
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s, background 0.2s;
+    transition: transform 0.1s, background 0.2s, opacity 0.2s;
     mix-blend-mode: difference;
+    opacity: 0;
   }
   .cursor-ring {
     position: fixed;
@@ -91,8 +91,13 @@
     pointer-events: none;
     z-index: 9998;
     transform: translate(-50%, -50%);
-    transition: transform 0.15s ease, width 0.2s, height 0.2s;
-    opacity: 0.6;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    opacity: 0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body, a, button, .lang-btn, input, textarea, select, .btn-primary, .btn-secondary { cursor: none; }
+    .cursor.active { opacity: 1; }
+    .cursor-ring.active { opacity: 0.6; }
   }
 
   /* NOISE OVERLAY */
@@ -561,7 +566,7 @@
   .t-line { margin-bottom: 8px; line-height: 1.6; }
   .t-prompt { color: var(--gold); }
   .t-cmd { color: var(--white); }
-  .t-out { color: rgba(240,237,232,0.4); }
+  .t-out { color: rgba(240,237,232,0.55); }
   .t-success { color: #27ae60; }
   .t-warn { color: var(--red); }
   .t-cursor {
@@ -650,7 +655,7 @@
 
   .step p {
     font-size: 0.85rem;
-    color: rgba(240,237,232,0.45);
+    color: rgba(240,237,232,0.6);
     line-height: 1.6;
     font-weight: 300;
   }
@@ -805,7 +810,7 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
-    cursor: none;
+    cursor: pointer;
     transition: all 0.2s;
   }
   .lang-btn.active, .lang-btn:hover {
@@ -840,8 +845,18 @@
 
   /* MOBILE */
   @media (max-width: 900px) {
-    nav { padding: 20px 24px; }
-    nav ul { display: none; }
+    nav { padding: 16px 24px; flex-wrap: wrap; }
+    nav ul {
+      display: flex;
+      order: 3;
+      width: 100%;
+      gap: 20px;
+      margin-top: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    nav a { white-space: nowrap; }
     #hero { padding: 120px 24px 60px; }
     .shield-deco { display: none; }
     .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 24px; }
@@ -882,8 +897,8 @@
   <div class="grid-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-tag" data-fr="// Conformité - Cybersécurité — Protection" data-en="//  Compliance — Cybersecurity — Protection">
-      //  Conformité — Cybersécurité — Protection
+    <div class="hero-tag" data-fr="// Conformité — Cybersécurité — Protection" data-en="// Compliance — Cybersecurity — Protection">
+      // Conformité — Cybersécurité — Protection
     </div>
     <h1 data-fr="Protéger ce qui <em>compte vraiment</em>.<br>Avant qu'il soit <span class='red'>trop tard.</span>" 
         data-en="Protecting what <em>truly matters</em>.<br>Before it's <span class='red'>too late.</span>">
@@ -959,7 +974,7 @@
   <div class="services-grid">
     <div class="service-card reveal">
       <span class="service-number">01</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
         <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/>
         <polyline points="9 12 11 14 15 10"/>
       </svg>
@@ -972,20 +987,20 @@
 
     <div class="service-card reveal">
       <span class="service-number">02</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
       <h3 data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</h3>
-      <p class="service-desc" data-fr="Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en oeuvre et préparation aux obligations de notification d'incident."
+      <p class="service-desc" data-fr="Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en œuvre et préparation aux obligations de notification d'incident."
          data-en="NIS2 and CyberFundamentals (CyFun, the Belgian CCB framework) compliance. Gap analysis, mapping of critical assets, implementation roadmap and preparation for incident-notification obligations.">
-        Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en oeuvre et préparation aux obligations de notification d'incident.
+        Mise en conformité NIS2 et CyberFundamentals (CyFun, référentiel du CCB belge). Analyse d'écart, cartographie des actifs critiques, feuille de route de mise en œuvre et préparation aux obligations de notification d'incident.
       </p>
     </div>
 
     <div class="service-card reveal">
       <span class="service-number">03</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="10"/>
         <line x1="12" y1="8" x2="12" y2="12"/>
         <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -999,7 +1014,7 @@
 
     <div class="service-card reveal">
       <span class="service-number">04</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
         <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -1014,7 +1029,7 @@
 
     <div class="service-card reveal">
       <span class="service-number">05</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
         <line x1="16" y1="13" x2="8" y2="13"/>
@@ -1030,7 +1045,7 @@
 
     <div class="service-card reveal" style="background: linear-gradient(135deg, rgba(192,57,43,0.08), rgba(201,168,76,0.05)); border-color: rgba(192,57,43,0.2);">
       <span class="service-number">+</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--red)">
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--red)" aria-hidden="true" focusable="false">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
       </svg>
       <h3 data-fr="Sur Mesure" data-en="Custom Mission">Sur Mesure</h3>
@@ -1044,11 +1059,11 @@
 
 <!-- CERTIFICATIONS -->
 <section id="certifications">
-  <div class="section-tag" data-fr="// Expertise validée" data-en="// Validated expertise">// Expertise validée</div>
-  <h2 data-fr="<em>Certifications</em> & Formations" data-en="<em>Certifications</em> & Training"><em>Certifications</em> & Formations</h2>
-  <p class="section-intro" data-fr="Des certifications reconnues internationalement qui garantissent un niveau d'expertise et une rigueur méthodologique éprouvée." 
-     data-en="Internationally recognized certifications that guarantee a level of expertise and proven methodological rigor.">
-    Des certifications reconnues internationalement qui garantissent un niveau d'expertise et une rigueur méthodologique éprouvée.
+  <div class="section-tag" data-fr="// Compétences & référentiels" data-en="// Skills & frameworks">// Compétences & référentiels</div>
+  <h2 data-fr="<em>Formation</em> & expertise" data-en="<em>Training</em> & expertise"><em>Formation</em> & expertise</h2>
+  <p class="section-intro" data-fr="Une démarche de certification structurée et des compétences techniques éprouvées sur le terrain. Référentiels reconnus internationalement (ISO 27001, NIS2, RGPD), méthodologie rigoureuse."
+     data-en="A structured certification path and field-proven technical skills. Internationally recognized frameworks (ISO 27001, NIS2, GDPR), rigorous methodology.">
+    Une démarche de certification structurée et des compétences techniques éprouvées sur le terrain. Référentiels reconnus internationalement (ISO 27001, NIS2, RGPD), méthodologie rigoureuse.
   </p>
 
   <div class="cert-grid">
@@ -1075,7 +1090,7 @@
     </div>
 
     <div class="cert-card reveal">
-      <div class="cert-badge">RGPD<br>DPO</div>
+      <div class="cert-badge">RGPD<br>GDPR</div>
       <div class="cert-info">
         <h4>RGPD / GDPR</h4>
         <p data-fr="Conformité au Règlement Général sur la Protection des Données. Protection de la vie privée et des données personnelles au sein de l'Union Européenne." 
@@ -1089,9 +1104,9 @@
       <div class="cert-badge">SEC<br>OPS</div>
       <div class="cert-info">
         <h4 data-fr="Pentest & Audit Réseau" data-en="Pentest & Network Audit">Pentest & Audit Réseau</h4>
-        <p data-fr="Maîtrise des outils d'audit offensif : Nmap, Burpsuite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques." 
-           data-en="Mastery of offensive audit tools: Nmap, Burpsuite, Wireshark, Nikto, SQLMap. OWASP methodology and ethical penetration testing.">
-          Maîtrise des outils d'audit offensif : Nmap, Burpsuite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques.
+        <p data-fr="Maîtrise des outils d'audit offensif : Nmap, Burp Suite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques." 
+           data-en="Mastery of offensive audit tools: Nmap, Burp Suite, Wireshark, Nikto, SQLMap. OWASP methodology and ethical penetration testing.">
+          Maîtrise des outils d'audit offensif : Nmap, Burp Suite, Wireshark, Nikto, SQLMap. Méthodologie OWASP et tests d'intrusion éthiques.
         </p>
       </div>
     </div>
@@ -1138,7 +1153,7 @@
       <li data-fr="Formation PECB ISO 27001 Lead Implementer (certification en cours)" data-en="PECB ISO 27001 Lead Implementer training (certification in progress)">Formation PECB ISO 27001 Lead Implementer (certification en cours)</li>
       <li data-fr="Conformité NIS2, CyFun & RGPD" data-en="NIS2, CyFun & GDPR compliance">Conformité NIS2, CyFun & RGPD</li>
       <li data-fr="Pentest réseau & audit applicatif" data-en="Network pentest & application audit">Pentest réseau & audit applicatif</li>
-      <li data-fr="Basé en Belgique, interventions Europe" data-en="Based in Belgium, European interventions">Basé en Belgique, interventions Europe</li>
+      <li data-fr="Basé en Belgique, interventions Europe" data-en="Based in Belgium, working across Europe">Basé en Belgique, interventions Europe</li>
       <li data-fr="Disponible en complément d'activité" data-en="Available as complementary activity">Disponible en complément d'activité</li>
     </ul>
   </div>
@@ -1196,14 +1211,14 @@
       <div class="section-tag" data-fr="// Me contacter" data-en="// Contact me">// Me contacter</div>
       <h2 data-fr="Parlons de votre <em>sécurité</em>" data-en="Let's talk about your <em>security</em>">Parlons de votre <em>sécurité</em></h2>
       <p class="section-intro" data-fr="Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h." 
-         data-en="You have a compliance project, an audit to carry out or simply questions? I will respond within 24 hours.">
+         data-en="Have a compliance project, an audit to run, or just a few questions? I reply within 24 hours.">
         Vous avez un projet de mise en conformité, un audit à réaliser ou simplement des questions ? Je vous réponds sous 24h.
       </p>
 
       <div class="contact-methods">
         <a href="mailto:contact@shieldcore.be" class="contact-method">
           <div class="contact-method-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
@@ -1213,22 +1228,9 @@
             <div class="contact-method-value">contact@shieldcore.be</div>
           </div>
         </a>
-        <a href="https://linkedin.com" class="contact-method">
-          <div class="contact-method-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-              <rect x="2" y="9" width="4" height="12"/>
-              <circle cx="4" cy="4" r="2"/>
-            </svg>
-          </div>
-          <div>
-            <div class="contact-method-label">LinkedIn</div>
-            <div class="contact-method-value">ShieldCore Consulting</div>
-          </div>
-        </a>
         <div class="contact-method">
           <div class="contact-method-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
@@ -1244,21 +1246,21 @@
     <form class="contact-form reveal" action="https://formspree.io/f/xlgpwnja" method="POST">
       <div class="form-row">
         <div class="form-group">
-          <label data-fr="Prénom" data-en="First name">Prénom</label>
-          <input type="text" name="prenom" placeholder="Jean">
+          <label for="f-prenom" data-fr="Prénom" data-en="First name">Prénom</label>
+          <input id="f-prenom" type="text" name="prenom" placeholder="Jean">
         </div>
         <div class="form-group">
-          <label data-fr="Société" data-en="Company">Société</label>
-          <input type="text" name="societe" placeholder="Acme Corp">
+          <label for="f-societe" data-fr="Société" data-en="Company">Société</label>
+          <input id="f-societe" type="text" name="societe" placeholder="Acme Corp">
         </div>
       </div>
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" placeholder="jean@acme.com">
+        <label for="f-email" data-fr="Email" data-en="Email">Email</label>
+        <input id="f-email" type="email" name="email" placeholder="jean@acme.com">
       </div>
       <div class="form-group">
-        <label data-fr="Sujet" data-en="Subject">Sujet</label>
-        <select name="sujet">
+        <label for="f-sujet" data-fr="Sujet" data-en="Subject">Sujet</label>
+        <select id="f-sujet" name="sujet">
           <option data-fr="Audit ISO 27001" data-en="ISO 27001 Audit">Audit ISO 27001</option>
           <option data-fr="Conformité NIS2" data-en="NIS2 Compliance">Conformité NIS2</option>
           <option data-fr="Pentest réseau" data-en="Network pentest">Pentest réseau</option>
@@ -1268,10 +1270,10 @@
         </select>
       </div>
       <div class="form-group">
-        <label data-fr="Message" data-en="Message">Message</label>
-        <textarea placeholder="Décrivez votre besoin..."></textarea>
+        <label for="f-message" data-fr="Message" data-en="Message">Message</label>
+        <textarea id="f-message" name="message" placeholder="Décrivez votre besoin..."></textarea>
       </div>
-      <button type="submit" class="btn-primary" style="width:100%; justify-content:center; border:none; cursor:none;" 
+      <button type="submit" class="btn-primary" style="width:100%; justify-content:center; border:none;"
               data-fr="Envoyer le message" data-en="Send message">
         Envoyer le message
       </button>
@@ -1286,7 +1288,6 @@
     © 2026 ShieldCore — Tous droits réservés
   </div>
   <div class="footer-links">
-    
     <a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
     <a href="confidentialite.html" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
   </div>
@@ -1297,6 +1298,8 @@
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   document.addEventListener('mousemove', e => {
+    cursor.classList.add('active');
+    ring.classList.add('active');
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
     setTimeout(() => {
