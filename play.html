@@ -14,7 +14,7 @@
     box-shadow:0 0 0 2px #7a6330,0 0 70px rgba(192,57,43,.25);max-width:100%;max-height:100%}
   #scan{position:fixed;inset:0;pointer-events:none;z-index:5;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
-  #back{position:fixed;left:10px;bottom:8px;z-index:6;color:#7a6330;font-size:9px;text-decoration:none;letter-spacing:1px;cursor:pointer}
+  #back{position:fixed;left:10px;bottom:8px;z-index:6;color:#7a6330;font-size:9px;text-decoration:none;letter-spacing:1px}
   #back:hover{color:#C9A84C}
 </style>
 </head>
@@ -25,14 +25,14 @@
 <script>
 const cv=document.getElementById('c'),x=cv.getContext('2d');
 const W=cv.width,H=cv.height,CX=W/2,CY=H/2,R=30,HITR=40;
-const GOLD='#C9A84C',GOLDL='#E8C97A',RED='#C0392B',REDB='#E74C3C',GRN='#27ae60',DIM='#7a6330',INK='#0a0908';
+const GOLD='#C9A84C',GOLDL='#E8C97A',RED='#C0392B',REDB='#E74C3C',DIM='#7a6330',INK='#0a0908';
 const THREATS=['SQLi','XSS','CSRF','RCE','CVE','BOT','0DAY','DDoS','MITM','LEAK','SPF','IDOR','PHISH','RANSOM'];
 const LINES=['PERIMETRE TENU.','LE CORE RESISTE.','VULNS NEUTRALISEES.','ZERO JOUR, ZERO PEUR.','RIEN N\'EST PASSE.'];
 
-let mouse={x:CX,y:CY-120},keys={},state='title',shake=0,flash=0,muted=false;
-let bullets,foes,parts,score,patched,hp,spawnT,spawnEvery,fireCd,endLine,wave;
+let mouse={x:CX,y:CY-150},keys={},firing=false,state='title',shake=0,flash=0,muted=false;
+let bullets,foes,parts,score,patched,hp,spawnT,spawnEvery,fireCd,endLine,wave,aim=-Math.PI/2;
 
-function reset(){bullets=[];foes=[];parts=[];score=0;patched=0;hp=3;spawnT=0;spawnEvery=68;fireCd=0;flash=0;wave=1;endLine=LINES[(Math.random()*LINES.length)|0];}
+function reset(){bullets=[];foes=[];parts=[];score=0;patched=0;hp=3;spawnT=0;spawnEvery=100;fireCd=0;flash=0;wave=1;endLine=LINES[(Math.random()*LINES.length)|0];}
 function start(){reset();state='play';}
 
 let AC;
@@ -46,32 +46,35 @@ addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if(e.key===' ')e.p
 addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
 function setMouse(cx,cy){const r=cv.getBoundingClientRect();mouse.x=(cx-r.left)*(W/r.width);mouse.y=(cy-r.top)*(H/r.height);}
 cv.addEventListener('mousemove',e=>setMouse(e.clientX,e.clientY));
-cv.addEventListener('mousedown',()=>{if(state!=='play')start();else fire();});
-addEventListener('touchstart',e=>{if(e.touches[0])setMouse(e.touches[0].clientX,e.touches[0].clientY);if(state!=='play')start();else fire();},{passive:true});
+cv.addEventListener('mousedown',()=>{if(state!=='play')start();else firing=true;});
+addEventListener('mouseup',()=>firing=false);
+addEventListener('touchstart',e=>{if(e.touches[0])setMouse(e.touches[0].clientX,e.touches[0].clientY);if(state!=='play')start();else firing=true;},{passive:true});
 addEventListener('touchmove',e=>{if(e.touches[0])setMouse(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+addEventListener('touchend',()=>firing=false);
 
-function fire(){if(fireCd>0)return;fireCd=8;
-  let dx=mouse.x-CX,dy=mouse.y-CY,d=Math.hypot(dx,dy)||1;
-  bullets.push({x:CX+dx/d*R,y:CY+dy/d*R,vx:dx/d*15,vy:dy/d*15});
+function fire(){if(fireCd>0)return;fireCd=7;
+  const dx=Math.cos(aim),dy=Math.sin(aim);
+  bullets.push({x:CX+dx*(R+4),y:CY+dy*(R+4),vx:dx*15,vy:dy*15});
   beep(900,.05,'square',.03);}
 
 function spawn(){
   const a=Math.random()*Math.PI*2,dist=Math.hypot(W,H)/2+30;
   const fx=CX+Math.cos(a)*dist,fy=CY+Math.sin(a)*dist;
   let dx=CX-fx,dy=CY-fy,d=Math.hypot(dx,dy)||1;
-  const sp=0.8+Math.random()*0.7+score/5000;
+  const sp=0.5+Math.random()*0.35+score/7000;
   const label=THREATS[(Math.random()*THREATS.length)|0];
   foes.push({x:fx,y:fy,vx:dx/d*sp,vy:dy/d*sp,label,r:14+label.length*3});}
 
 function burst(px,py,col,n){for(let i=0;i<(n||14);i++)parts.push({x:px,y:py,vx:(Math.random()-.5)*7,vy:(Math.random()-.5)*7,life:1,col});}
 
 function update(){
+  aim=Math.atan2(mouse.y-CY,mouse.x-CX);
   if(fireCd>0)fireCd--;
-  if(keys[' '])fire();
+  if(firing||keys[' '])fire();
   bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;});
   bullets=bullets.filter(b=>b.x>-20&&b.x<W+20&&b.y>-20&&b.y<H+20);
 
-  spawnT++;if(spawnT>=spawnEvery){spawnT=0;spawn();if(spawnEvery>20){spawnEvery-=0.6;}wave=1+Math.floor(score/300);}
+  spawnT++;if(spawnT>=spawnEvery){spawnT=0;spawn();if(spawnEvery>34){spawnEvery-=0.4;}wave=1+Math.floor(score/400);}
 
   for(const f of foes){
     f.x+=f.vx;f.y+=f.vy;
@@ -87,15 +90,17 @@ function update(){
   if(shake>0)shake--;if(flash>0)flash--;
 }
 
-function core(cx,cy,s,col){
+function core(cx,cy,s,col,ang){
   x.save();x.translate(cx,cy);
+  if(typeof ang==='number')x.rotate(ang-Math.PI/2);
   x.strokeStyle=col;x.lineWidth=3;x.fillStyle='rgba(201,168,76,.12)';
   x.beginPath();x.moveTo(0,-s);x.lineTo(s*.8,-s*.55);x.lineTo(s*.8,s*.15);
   x.bezierCurveTo(s*.8,s*.7,s*.4,s*1.05,0,s*1.25);
   x.bezierCurveTo(-s*.4,s*1.05,-s*.8,s*.7,-s*.8,s*.15);
   x.lineTo(-s*.8,-s*.55);x.closePath();x.fill();x.stroke();
+  x.restore();
   x.fillStyle=col;x.font='bold '+s+'px "Press Start 2P",monospace';x.textAlign='center';x.textBaseline='middle';
-  x.fillText('S',0,s*.2);x.restore();
+  x.fillText('S',cx,cy);
 }
 
 function draw(){
@@ -105,7 +110,6 @@ function draw(){
   x.strokeStyle='rgba(201,168,76,.05)';x.lineWidth=1;
   for(let i=0;i<W;i+=40){x.beginPath();x.moveTo(i,0);x.lineTo(i,H);x.stroke();}
   for(let j=0;j<H;j+=40){x.beginPath();x.moveTo(0,j);x.lineTo(W,j);x.stroke();}
-  // perimeter ring
   x.strokeStyle='rgba(122,99,48,.4)';x.beginPath();x.arc(CX,CY,HITR+8,0,7);x.stroke();
 
   if(state==='title'){
@@ -117,7 +121,7 @@ function draw(){
     x.fillStyle=GOLDL;x.font='10px "Press Start 2P",monospace';x.fillText('DEFENDS LE CORE',CX,CY+110);
     x.fillStyle=DIM;x.font='8px "Press Start 2P",monospace';x.fillText('LES MENACES CONVERGENT DE PARTOUT',CX,CY+135);
     x.fillStyle=blink()?GOLD:DIM;x.font='11px "Press Start 2P",monospace';x.fillText('CLIC / ESPACE = START',CX,CY+185);
-    x.fillStyle=DIM;x.font='8px "Press Start 2P",monospace';x.fillText('SOURIS = VISER   CLIC/ESPACE = TIRER   M = SON',CX,H-40);
+    x.fillStyle=DIM;x.font='8px "Press Start 2P",monospace';x.fillText('SOURIS = VISER   MAINTIENS CLIC/ESPACE = TIRER   M = SON',CX,H-40);
     drawReticle();x.restore();return;
   }
 
@@ -132,13 +136,8 @@ function draw(){
   parts.forEach(p=>{x.globalAlpha=Math.max(0,p.life);x.fillStyle=p.col;x.fillRect(p.x,p.y,3,3);});x.globalAlpha=1;
 
   if(flash>0){x.strokeStyle='rgba(231,76,60,'+(flash/12)+')';x.lineWidth=4;x.beginPath();x.arc(CX,CY,HITR+6,0,7);x.stroke();}
-  // aim barrel
-  const ang=Math.atan2(mouse.y-CY,mouse.x-CX);
-  x.save();x.translate(CX,CY);x.rotate(ang);x.strokeStyle=GOLDL;x.lineWidth=4;
-  x.beginPath();x.moveTo(R-4,0);x.lineTo(R+16,0);x.stroke();x.restore();
-  core(CX,CY,R,hp>1?GOLD:REDB);
+  core(CX,CY,R,hp>1?GOLD:REDB,aim);
 
-  // HUD
   x.textAlign='left';x.textBaseline='top';x.fillStyle=GOLD;x.font='12px "Press Start 2P",monospace';
   x.fillText('SCORE '+score,16,14);
   x.textAlign='right';x.fillText('WAVE '+wave,W-16,14);
@@ -147,7 +146,7 @@ function draw(){
 
   if(state==='over'){
     x.fillStyle='rgba(7,7,7,.8)';x.fillRect(0,0,W,H);x.textAlign='center';
-    x.fillStyle=RED;x.font='30px "Press Start 2P",monospace';x.fillText('CORE BREACHED',CX,CY-110);
+    x.fillStyle=RED;x.font='28px "Press Start 2P",monospace';x.fillText('CORE BREACHED',CX,CY-110);
     x.fillStyle=GOLDL;x.font='12px "Press Start 2P",monospace';x.fillText(endLine,CX,CY-55);
     x.fillStyle=GOLD;x.font='16px "Press Start 2P",monospace';x.fillText('SCORE '+score,CX,CY+4);
     x.fillStyle=DIM;x.font='10px "Press Start 2P",monospace';x.fillText(patched+' menaces neutralisees',CX,CY+38);
