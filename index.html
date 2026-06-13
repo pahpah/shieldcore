@@ -1354,6 +1354,13 @@
     const ph = { fr: 'Décrivez votre besoin...', nl: 'Beschrijf uw behoefte...', en: 'Describe your need...' };
     document.querySelector('textarea').placeholder = ph[lang] || ph.fr;
   }
+
+  // konami -> easter egg
+  (function(){var s=[38,38,40,40,37,39,37,39,66,65],i=0;
+    addEventListener('keydown',function(e){
+      i=(e.keyCode===s[i])?i+1:(e.keyCode===s[0]?1:0);
+      if(i===s.length){i=0;location.href='/play';}
+    });})();
 </script>
 </body>
 </html>
