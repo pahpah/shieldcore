@@ -177,7 +177,7 @@ footer a:hover{color:var(--orange)}
 <header>
   <div class="wrap nav">
     <a class="brand" href="#top">
-      <img src="assets/img/logo-mark.png" alt="SC Technic">
+      <img src="assets/img/logo-mark.png?v=2" alt="SC Technic">
       <span class="logo-txt">SC<b>Technic</b></span>
     </a>
     <button class="burger" aria-label="Menu" onclick="document.getElementById('links').classList.toggle('open')">
@@ -210,7 +210,7 @@ footer a:hover{color:var(--orange)}
       </div>
     </div>
     <div class="hero-card">
-      <img src="assets/img/work/g08.jpg" alt="Installation de climatisation par SC Technic">
+      <img src="assets/img/work/g08.jpg?v=2" alt="Installation de climatisation par SC Technic">
     </div>
   </div>
 </section>
@@ -268,7 +268,7 @@ footer a:hover{color:var(--orange)}
 
 <section class="sec about" id="apropos">
   <div class="wrap">
-    <div class="ph"><img loading="lazy" src="assets/img/work/g12.jpg" alt="Rénovation de salle de bain par SC Technic"></div>
+    <div class="ph"><img loading="lazy" src="assets/img/work/g12.jpg?v=2" alt="Rénovation de salle de bain par SC Technic"></div>
     <div>
       <span class="eyebrow">À propos</span>
       <h2>Un artisan de confiance, près de chez vous</h2>
@@ -354,14 +354,14 @@ footer a:hover{color:var(--orange)}
     <span class="eyebrow">Nos marques</span>
     <h2 style="font-size:1.5rem;margin-top:6px">Nous travaillons avec des marques de confiance</h2>
     <div class="plogos">
-      <img loading="lazy" src="assets/img/partners/brand-1.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-2.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-3.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-4.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-5.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-6.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-7.jpg" alt="">
-      <img loading="lazy" src="assets/img/partners/brand-8.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-1.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-2.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-3.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-4.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-5.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-6.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-7.jpg?v=2" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-8.jpg?v=2" alt="">
     </div>
   </div>
 </section>
@@ -404,7 +404,7 @@ footer a:hover{color:var(--orange)}
   <div class="wrap">
     <div class="fgrid">
       <div>
-        <a class="brand" href="#top"><img src="assets/img/logo-mark.png" alt="SC Technic" style="height:34px"><span class="logo-txt">SC<b>Technic</b></span></a>
+        <a class="brand" href="#top"><img src="assets/img/logo-mark.png?v=2" alt="SC Technic" style="height:34px"><span class="logo-txt">SC<b>Technic</b></span></a>
         <p>Chauffage, sanitaire, pompe à chaleur, ventilation et climatisation. Installation, entretien et dépannage à Eghezée et dans sa région.</p>
       </div>
       <div>
@@ -440,7 +440,7 @@ footer a:hover{color:var(--orange)}
   <img id="lbimg" src="" alt="">
 </div>
 
-<script src="assets/img/work/gallery.js"></script>
+<script src="assets/img/work/gallery.js?v=2"></script>
 <script>
 function closeNav(){document.getElementById('links').classList.remove('open');}
 document.getElementById('yr').textContent=new Date().getFullYear();
@@ -448,7 +448,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 var lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg');
 (window.GALLERY||[]).forEach(function(fn){
   var a=document.createElement('a'),im=document.createElement('img');
-  im.loading='lazy';im.src='assets/img/work/'+fn;im.alt='Réalisation SC Technic';
+  im.loading='lazy';im.src='assets/img/work/'+fn+'?v=2';im.alt='Réalisation SC Technic';
   a.appendChild(im);
   a.addEventListener('click',function(){lbimg.src=im.src;lbimg.alt=im.alt;lb.classList.add('open');});
   document.getElementById('gallery').appendChild(a);
