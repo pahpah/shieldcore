@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>SC Technic — Chauffage, sanitaire & climatisation à Eghezée</title>
+<meta name="description" content="SC Technic : installation, entretien et dépannage de chauffage (gaz/mazout), pompe à chaleur, sanitaire, ventilation et climatisation à Eghezée et sa région. Personnel qualifié et certifié.">
+<link rel="icon" href="assets/img/favicon.png">
+<meta property="og:title" content="SC Technic — Chauffage, sanitaire & climatisation">
+<meta property="og:description" content="Installation, entretien et dépannage par une équipe certifiée à Eghezée et sa région.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#E8771C; --orange-d:#cf6510; --ink:#15171c; --ink2:#1d2026;
+  --bg:#ffffff; --soft:#f5f6f8; --line:#e7e9ee; --text:#2a2e36; --muted:#6b7280;
+  --shadow:0 10px 30px rgba(20,23,28,.08); --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.logo-txt{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);line-height:1.2}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-family:'Poppins';font-size:.95rem;padding:13px 22px;border-radius:10px;cursor:pointer;border:none;transition:.15s;white-space:nowrap}
+.btn-o{background:var(--orange);color:#fff}.btn-o:hover{background:var(--orange-d)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn-line{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.btn-line:hover{border-color:var(--orange);color:var(--orange)}
+.eyebrow{font-family:'Poppins';font-weight:600;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+.sec{padding:84px 0}
+.sec h2{font-size:2rem;font-weight:700;margin:8px 0 10px}
+.sec .lead{color:var(--muted);max-width:620px;margin-bottom:38px}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(21,23,28,.97);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.07)}
+.nav{display:flex;align-items:center;gap:26px;height:74px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand img{height:40px;width:auto;border-radius:7px}
+.brand .logo-txt{color:#fff;font-weight:700;font-size:1.15rem;letter-spacing:.02em}
+.brand .logo-txt b{color:var(--orange)}
+.nav .links{display:flex;gap:24px;margin-left:auto}
+.nav .links a{color:rgba(255,255,255,.82);font-size:.93rem;font-weight:500}
+.nav .links a:hover{color:#fff}
+.nav .tel{display:inline-flex;align-items:center;gap:8px;color:#fff;font-family:'Poppins';font-weight:600;background:var(--orange);padding:10px 16px;border-radius:9px;font-size:.92rem}
+.nav .tel:hover{background:var(--orange-d)}
+.burger{display:none;margin-left:auto;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.burger svg{width:28px;height:28px}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#15171c 0%,#202530 60%,#262d3a 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(232,119,28,.20),transparent 70%);border-radius:50%}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-top:70px;padding-bottom:78px;position:relative;z-index:1}
+.hero h1{color:#fff;font-size:2.85rem;font-weight:700;letter-spacing:-.5px}
+.hero h1 span{color:var(--orange)}
+.hero p{color:rgba(255,255,255,.78);font-size:1.12rem;margin:18px 0 28px;max-width:520px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-card{border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4);transform:rotate(1.2deg);border:6px solid rgba(255,255,255,.06)}
+.hero-card img{width:100%;height:420px;object-fit:cover}
+.trust{background:var(--ink2);color:rgba(255,255,255,.9)}
+.trust .wrap{display:flex;flex-wrap:wrap;gap:10px 34px;justify-content:center;padding:18px 22px;font-size:.9rem;font-weight:500}
+.trust span{display:inline-flex;align-items:center;gap:9px}
+.trust svg{width:18px;height:18px;color:var(--orange);flex:none}
+
+/* services */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;transition:.18s}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:#dfe2e9}
+.card .ico{width:52px;height:52px;border-radius:12px;background:rgba(232,119,28,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.card .ico svg{width:28px;height:28px;color:var(--orange)}
+.card h3{font-size:1.2rem;font-weight:600;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+
+/* why */
+.why{background:var(--soft)}
+.why .cards{grid-template-columns:repeat(3,1fr)}
+.why .card{background:#fff;text-align:center}
+.why .card .ico{margin:0 auto 16px}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gal a{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;background:#eee;aspect-ratio:4/3}
+.gal img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.gal a:hover img{transform:scale(1.07)}
+.gal a::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(20,23,28,.35));opacity:0;transition:.2s}
+.gal a:hover::after{opacity:1}
+
+/* reviews */
+.reviews{background:var(--ink);color:#fff}
+.reviews h2{color:#fff}
+.reviews .lead{color:rgba(255,255,255,.6)}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.review{background:var(--ink2);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:28px 26px}
+.stars{color:var(--orange);font-size:1.05rem;letter-spacing:2px;margin-bottom:12px}
+.review p{font-size:1.05rem;color:rgba(255,255,255,.92);margin-bottom:18px;font-style:italic}
+.review .who{font-family:'Poppins';font-weight:600;color:#fff}
+.review .who small{display:block;font-weight:400;color:rgba(255,255,255,.5);font-size:.82rem;font-style:normal}
+
+/* partners */
+.partners{padding:56px 0;border-top:1px solid var(--line)}
+.plogos{display:flex;flex-wrap:wrap;gap:30px 46px;align-items:center;justify-content:center;margin-top:26px}
+.plogos img{height:46px;width:auto;filter:grayscale(1);opacity:.65;transition:.2s}
+.plogos img:hover{filter:none;opacity:1}
+
+/* contact */
+.contact{background:var(--soft)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.cinfo .row{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
+.cinfo .row .ico{width:42px;height:42px;border-radius:10px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none}
+.cinfo .row .ico svg{width:20px;height:20px;color:var(--orange)}
+.cinfo .row b{font-family:'Poppins';display:block;color:var(--ink);font-size:.98rem}
+.cinfo .row span{color:var(--muted);font-size:.95rem}
+.mapcard{display:flex;align-items:center;gap:14px;margin-top:10px;background:linear-gradient(135deg,#eef1f6,#e4e9f1);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;transition:.15s}
+.mapcard:hover{border-color:var(--orange);box-shadow:var(--shadow)}
+.mapcard svg{width:30px;height:30px;color:var(--orange);flex:none}
+.mapcard b{display:block;font-family:'Poppins';color:var(--ink);font-size:.98rem;margin-bottom:2px}
+.mapcard span{color:var(--muted);font-size:.86rem}
+.about{background:#fff}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+.about .ph{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3}
+.about .ph img{width:100%;height:100%;object-fit:cover}
+.about h2{font-size:2rem;margin:8px 0 14px}
+.about p{color:var(--muted);margin-bottom:14px}
+.about ul{list-style:none;margin:6px 0 24px}
+.about li{display:flex;gap:10px;align-items:center;margin-bottom:11px;font-weight:500;color:var(--text)}
+.about li svg{width:20px;height:20px;color:var(--orange);flex:none}
+form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
+form label{font-size:.8rem;font-weight:600;font-family:'Poppins';color:var(--ink);display:block;margin-bottom:6px}
+form input,form textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:.95rem;margin-bottom:16px;color:var(--text)}
+form input:focus,form textarea:focus{outline:none;border-color:var(--orange)}
+form textarea{resize:vertical;min-height:120px}
+form .btn-o{width:100%;justify-content:center}
+.form-note{font-size:.78rem;color:var(--muted);margin-top:10px;text-align:center}
+
+/* footer */
+footer{background:#0f1115;color:rgba(255,255,255,.62);padding:54px 0 26px;font-size:.9rem}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:34px}
+footer .brand .logo-txt{font-size:1.1rem}
+footer p{margin-top:14px;max-width:330px;line-height:1.7}
+footer h4{color:#fff;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+footer ul{list-style:none}footer li{margin-bottom:9px}
+footer a:hover{color:var(--orange)}
+.fbar{border-top:1px solid rgba(255,255,255,.09);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.82rem;color:rgba(255,255,255,.45)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(10,11,14,.93);display:none;align-items:center;justify-content:center;z-index:100;padding:30px}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:88vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lb .x{position:absolute;top:22px;right:26px;color:#fff;font-size:2.4rem;cursor:pointer;line-height:1;background:none;border:none}
+
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:30px;padding-top:48px;padding-bottom:54px}
+  .hero-card{transform:none;order:-1}.hero-card img{height:260px}
+  .hero h1{font-size:2.2rem}
+  .cards,.why .cards,.rgrid{grid-template-columns:1fr 1fr}
+  .gal{grid-template-columns:repeat(3,1fr)}
+  .cgrid,.fgrid{grid-template-columns:1fr}
+  .about .wrap{grid-template-columns:1fr;gap:26px}.about .ph{order:-1}
+}
+@media(max-width:620px){
+  .nav .links{display:none}.burger{display:block}
+  .nav .links.open{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;background:var(--ink);padding:18px 22px;gap:16px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .nav .tel span{display:none}
+  .sec{padding:60px 0}.sec h2{font-size:1.7rem}
+  .cards,.why .cards,.rgrid{grid-template-columns:1fr}
+  .gal{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:1.95rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <img src="assets/img/logo-mark.png" alt="SC Technic">
+      <span class="logo-txt">SC<b>Technic</b></span>
+    </a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('links').classList.toggle('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="links" id="links">
+      <a href="#services" onclick="closeNav()">Services</a>
+      <a href="#apropos" onclick="closeNav()">À propos</a>
+      <a href="#realisations" onclick="closeNav()">Réalisations</a>
+      <a href="#avis" onclick="closeNav()">Avis</a>
+      <a href="#contact" onclick="closeNav()">Contact</a>
+    </nav>
+    <a class="tel" href="tel:+32475763683">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>0475 76 36 83</span>
+    </a>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Chauffagiste · Sanitaire · Climatisation</span>
+      <h1>Votre confort, <span>installé et entretenu</span> par des pros.</h1>
+      <p>SC Technic installe, entretient et dépanne vos systèmes de chauffage, sanitaire, ventilation et climatisation à Eghezée et dans sa région. Un travail soigné, par une équipe qualifiée et certifiée.</p>
+      <div class="cta">
+        <a class="btn btn-o" href="#contact">Demander un devis gratuit</a>
+        <a class="btn btn-ghost" href="tel:+32475763683">Appeler le 0475 76 36 83</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <img src="assets/img/work/g08.jpg" alt="Installation de climatisation par SC Technic">
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Personnel qualifié &amp; certifié</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Intervention rapide</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Gaz, mazout &amp; énergies renouvelables</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Eghezée et sa région</span>
+  </div>
+</div>
+
+<section class="sec" id="services">
+  <div class="wrap center">
+    <span class="eyebrow">Nos services</span>
+    <h2>Tout pour votre confort, sous un même toit</h2>
+    <p class="lead">De l'installation au dépannage, en passant par l'entretien : un seul interlocuteur pour votre chauffage, votre eau et votre air.</p>
+  </div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2c0 4-3 5-3 9a4 4 0 0 0 8 0c0-2-1-3-1-5"/><path d="M16 22a5 5 0 0 0 5-5c0-3-2-4-3-7"/></svg></div>
+        <h3>Chauffage gaz &amp; mazout</h3>
+        <p>Installation, remplacement et entretien de votre chaudière. On vous conseille le système le plus adapté à votre logement et on règle tout pour réduire votre consommation.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 0 3-3m-3 3L9 5"/><rect x="4" y="9" width="16" height="12" rx="2"/><path d="M8 13h.01M12 13h.01"/></svg></div>
+        <h3>Pompe à chaleur</h3>
+        <p>Passez à une énergie plus propre et économique. Étude, dimensionnement et installation de pompes à chaleur air/eau et air/air, avec un mot sur les primes disponibles.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-5.5 7-12a7 7 0 0 0-14 0c0 6.5 7 12 7 12z"/><path d="M9 9a3 3 0 0 1 6 0"/></svg></div>
+        <h3>Sanitaire</h3>
+        <p>Salle de bain, robinetterie, chauffe-eau, raccordements : installation et rénovation soignées de toute votre plomberie, du petit dépannage au projet complet.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2a4 4 0 0 0 0 8M22 12a4 4 0 0 0-8 0M12 22a4 4 0 0 0 0-8M2 12a4 4 0 0 0 8 0"/></svg></div>
+        <h3>Ventilation (VMC)</h3>
+        <p>Un air sain dans toute la maison. Pose et entretien de systèmes de ventilation mécanique (simple et double flux) pour évacuer l'humidité et renouveler l'air.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 7h20M2 17h20M6 7v10M18 7v10"/></svg></div>
+        <h3>Climatisation</h3>
+        <p>Une température agréable toute l'année. Installation et entretien de climatisations et systèmes réversibles, dimensionnés pour vos pièces et silencieux.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/></svg></div>
+        <h3>Dépannage &amp; entretien</h3>
+        <p>Une panne, une fuite, une chaudière qui lâche ? Intervention rapide et entretien périodique de vos installations pour éviter les mauvaises surprises et prolonger leur durée de vie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec about" id="apropos">
+  <div class="wrap">
+    <div class="ph"><img loading="lazy" src="assets/img/work/g12.jpg" alt="Rénovation de salle de bain par SC Technic"></div>
+    <div>
+      <span class="eyebrow">À propos</span>
+      <h2>Un artisan de confiance, près de chez vous</h2>
+      <p>SC Technic accompagne les particuliers et les indépendants de la région d'Eghezée pour tous leurs travaux de chauffage, sanitaire, ventilation et climatisation. De l'installation neuve au dépannage, en passant par l'entretien, nous mettons un point d'honneur à livrer un travail soigné, durable et conforme aux normes.</p>
+      <p>Un seul interlocuteur, à l'écoute, du premier devis à la mise en service.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Installation, entretien &amp; dépannage</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Conseils personnalisés &amp; devis gratuit</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Personnel qualifié et certifié</li>
+      </ul>
+      <a class="btn btn-o" href="#contact">Demander un devis</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec why" id="pourquoi">
+  <div class="wrap center">
+    <span class="eyebrow">Pourquoi SC Technic</span>
+    <h2>Un service rapide, efficace et soigné</h2>
+    <p class="lead">Ce qui fait la différence sur chaque chantier, du premier contact à la dernière vérification.</p>
+  </div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg></div>
+        <h3>Étude personnalisée</h3>
+        <p>Chaque projet commence par une étude adaptée à votre logement, vos besoins et votre budget. Pas de solution toute faite.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h3>Service rapide</h3>
+        <p>On intervient vite en cas de panne et on assure l'entretien régulier de vos installations pour qu'elles durent.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Travail certifié</h3>
+        <p>Des techniciens qualifiés et certifiés, pour une installation aux normes, sûre et durable. Du travail propre, dont on est fiers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="realisations">
+  <div class="wrap center">
+    <span class="eyebrow">Nos réalisations</span>
+    <h2>Notre travail en images</h2>
+    <p class="lead">Quelques chantiers réalisés par SC Technic. Cliquez pour agrandir.</p>
+  </div>
+  <div class="wrap">
+    <div class="gal" id="gallery"></div>
+  </div>
+</section>
+
+<section class="sec reviews" id="avis">
+  <div class="wrap center">
+    <span class="eyebrow">Avis clients</span>
+    <h2>Des clients toujours satisfaits</h2>
+    <p class="lead">Ce que disent les personnes qui nous ont fait confiance.</p>
+  </div>
+  <div class="wrap">
+    <div class="rgrid">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>« Ils sont impeccables ! »</p>
+        <div class="who">Annick Dessart<small>Particulier</small></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>« Service rapide, soigné et professionnel ! »</p>
+        <div class="who">Cristelle Fadeur<small>Particulier</small></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>« Très bonne équipe. Des professionnels avec une vraie cohésion. À conseiller les yeux fermés. »</p>
+        <div class="who">Vivien Provins<small>Particulier</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="partners">
+  <div class="wrap center">
+    <span class="eyebrow">Nos marques</span>
+    <h2 style="font-size:1.5rem;margin-top:6px">Nous travaillons avec des marques de confiance</h2>
+    <div class="plogos">
+      <img loading="lazy" src="assets/img/partners/brand-1.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-2.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-3.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-4.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-5.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-6.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-7.jpg" alt="">
+      <img loading="lazy" src="assets/img/partners/brand-8.jpg" alt="">
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap center">
+    <span class="eyebrow">Contact</span>
+    <h2>Un projet, une panne, une question ?</h2>
+    <p class="lead">Contactez-nous, nous vous répondons au plus vite. Devis gratuit et sans engagement.</p>
+  </div>
+  <div class="wrap">
+    <div class="cgrid">
+      <div class="cinfo">
+        <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-5.5 7-12a7 7 0 0 0-14 0c0 6.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><b>Adresse</b><span>Rue de la Blanchisserie 35, 5310 Eghezée</span></div></div>
+        <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><b>Téléphone</b><span><a href="tel:+32475763683">0475 76 36 83</a></span></div></div>
+        <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div><div><b>Email</b><span><a href="mailto:info@sc-technic.be">info@sc-technic.be</a></span></div></div>
+        <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><b>Horaires</b><span>Lun - Ven : 7h30 - 17h00<br>Week-end : fermé</span></div></div>
+        <a class="mapcard" href="https://www.google.com/maps?q=Rue%20de%20la%20Blanchisserie%2035%2C%205310%20Eghez%C3%A9e" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-5.5 7-12a7 7 0 0 0-14 0c0 6.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div><b>Rue de la Blanchisserie 35, 5310 Eghezée</b><span>Voir l'itinéraire sur Google Maps →</span></div>
+        </a>
+      </div>
+      <form action="https://formspree.io/f/REMPLACER_PAR_VOTRE_ID" method="POST">
+        <label for="n">Nom</label>
+        <input id="n" name="nom" type="text" placeholder="Votre nom" required>
+        <label for="e">Email</label>
+        <input id="e" name="email" type="email" placeholder="vous@exemple.be" required>
+        <label for="p">Téléphone</label>
+        <input id="p" name="telephone" type="tel" placeholder="0475 ...">
+        <label for="m">Votre message</label>
+        <textarea id="m" name="message" placeholder="Décrivez votre besoin (installation, dépannage, devis...)" required></textarea>
+        <button class="btn btn-o" type="submit">Envoyer ma demande</button>
+        <p class="form-note">Réponse rapide pendant les heures d'ouverture.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="#top"><img src="assets/img/logo-mark.png" alt="SC Technic" style="height:34px"><span class="logo-txt">SC<b>Technic</b></span></a>
+        <p>Chauffage, sanitaire, pompe à chaleur, ventilation et climatisation. Installation, entretien et dépannage à Eghezée et dans sa région.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Chauffage gaz &amp; mazout</a></li>
+          <li><a href="#services">Pompe à chaleur</a></li>
+          <li><a href="#services">Sanitaire</a></li>
+          <li><a href="#services">Ventilation (VMC)</a></li>
+          <li><a href="#services">Climatisation</a></li>
+          <li><a href="#services">Dépannage &amp; entretien</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Rue de la Blanchisserie 35<br>5310 Eghezée</li>
+          <li><a href="tel:+32475763683">0475 76 36 83</a></li>
+          <li><a href="mailto:info@sc-technic.be">info@sc-technic.be</a></li>
+          <li><a href="https://www.facebook.com/Sc-technic-137108793627244/" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>© <span id="yr"></span> SC Technic SPRL — TVA BE 0474.820.344</span>
+      <span>Tous droits réservés</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" onclick="this.classList.remove('open')">
+  <button class="x" aria-label="Fermer">&times;</button>
+  <img id="lbimg" src="" alt="">
+</div>
+
+<script src="assets/img/work/gallery.js"></script>
+<script>
+function closeNav(){document.getElementById('links').classList.remove('open');}
+document.getElementById('yr').textContent=new Date().getFullYear();
+// lightbox + galerie (générée automatiquement depuis assets/img/work/gallery.js)
+var lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg');
+(window.GALLERY||[]).forEach(function(fn){
+  var a=document.createElement('a'),im=document.createElement('img');
+  im.loading='lazy';im.src='assets/img/work/'+fn;im.alt='Réalisation SC Technic';
+  a.appendChild(im);
+  a.addEventListener('click',function(){lbimg.src=im.src;lbimg.alt=im.alt;lb.classList.add('open');});
+  document.getElementById('gallery').appendChild(a);
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
+</script>
+</body>
+</html>
